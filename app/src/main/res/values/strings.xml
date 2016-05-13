@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyPulz</string>
+    <string name="title_activity_another">Page Not Found</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_signup">SignUp</string>
+    <string name="title_activity_splash">Splash</string>
+    <string name="title_for_activityIndicater">Please Wait...</string>
+</resources>

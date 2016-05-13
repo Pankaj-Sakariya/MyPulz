@@ -1,0 +1,190 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".FindDoctorFragment">
+    <!--android:background="@mipmap/ic_splashscreen"-->
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:float="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:text="@string/hello_blank_fragment"-->
+                <!--android:padding="10dp"/>-->
+
+            <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="#8C000000"-->
+            <!--android:gravity="center"-->
+            <!--android:padding="10dp"-->
+            <!--android:text="Find Doctor"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:textSize="@dimen/textsize2"/>-->
+
+            <Spinner
+                android:id="@+id/spinner_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_bg"
+                android:layout_marginTop="10dp"
+
+                android:spinnerMode="dropdown"
+              />
+
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                float:fletPadding="5dp">
+
+                <EditText
+                    android:id="@+id/edt_village_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/field_back"
+                    android:textCursorDrawable="@drawable/cursor_colour"
+                    android:hint="Choose Location"
+                    android:drawableRight="@drawable/ic_menu_send"
+                    android:padding="@dimen/padding1"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+
+                    android:textSize="@dimen/textsize2" />
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+
+            <!--<com.wrapp.floatlabelededittext.FloatLabeledEditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<EditText-->
+            <!--android:id="@+id/edt_village_name1"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+
+            <!--android:hint="Enter Village Name"-->
+            <!--/>-->
+            <!--</com.wrapp.floatlabelededittext.FloatLabeledEditText>-->
+
+
+
+
+
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                float:fletPadding="5dp">
+
+
+                <EditText
+                    android:id="@+id/edt_remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/field_back"
+                    android:textCursorDrawable="@drawable/cursor_colour"
+                    android:hint="Enter Name of Doctor"
+                    android:drawableRight="@drawable/ic_menu_send"
+                    android:padding="@dimen/padding1"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/textsize2" />
+
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:id="@+id/btn_search"
+                android:background="@drawable/button_back"
+                android:layout_margin="16dp"
+                android:textColor="@color/white"
+
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/txt_user_id"
+                android:background="@drawable/button_back"
+                android:layout_margin="16dp"
+                android:textColor="@color/white"
+                android:visibility="gone"
+
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/txt_timestamp"
+                android:background="@drawable/button_back"
+                android:layout_margin="16dp"
+                android:textColor="@color/white"
+                android:visibility="gone"
+
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/txt_latitude"
+                android:background="@drawable/button_back"
+                android:layout_margin="16dp"
+                android:textColor="@color/white"
+                android:visibility="gone"
+
+
+                />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/txt_longitude"
+                android:background="@drawable/button_back"
+                android:layout_margin="16dp"
+                android:textColor="@color/white"
+                android:visibility="gone"
+
+                />
+
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</FrameLayout>
