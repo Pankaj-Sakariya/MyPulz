@@ -188,31 +188,31 @@ android:orientation="vertical"
             android:padding="@dimen/padding1">
 
 
-            <RadioGroup
-                android:id="@+id/radioUserType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:weightSum="4"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                >
+            <!--<RadioGroup-->
+                <!--android:id="@+id/radioUserType"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical"-->
+                <!--android:weightSum="4"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--&gt;-->
 
-                <RadioButton android:id="@+id/radio_patient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/textsize2"
-                    android:text="Publish My Name"
-                    android:layout_weight="2"/>
-                <RadioButton android:id="@+id/radio_doctor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Keep My Name Private"
-                    android:textSize="@dimen/textsize2"
-                    android:layout_weight="2"
+                <!--<RadioButton android:id="@+id/radio_patient"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="@dimen/textsize2"-->
+                    <!--android:text="Publish My Name"-->
+                    <!--android:layout_weight="2"/>-->
+                <!--<RadioButton android:id="@+id/radio_doctor"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Keep My Name Private"-->
+                    <!--android:textSize="@dimen/textsize2"-->
+                    <!--android:layout_weight="2"-->
 
-                    />
-            </RadioGroup>
+                    <!--/>-->
+            <!--</RadioGroup>-->
 
 
 
@@ -222,10 +222,10 @@ android:orientation="vertical"
                 float:fletPadding="5dp">
 
                 <EditText
-                    android:id="@+id/edt_first_name"
+                    android:id="@+id/edt_patient_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter First Name"
+                    android:hint="Enter Patient Name"
                     android:background="@drawable/field_back"
                     android:textColor="#000000"
                     android:singleLine="true"
@@ -238,25 +238,25 @@ android:orientation="vertical"
 
             <!--android:text="pprasoon"-->
 
-            <com.wrapp.floatlabelededittext.FloatLabeledEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                float:fletPadding="5dp">
+            <!--<com.wrapp.floatlabelededittext.FloatLabeledEditText-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--float:fletPadding="5dp">-->
 
-                <EditText
-                    android:id="@+id/edt_last_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Enter Last Name"
-                    android:background="@drawable/field_back"
-                    android:textColor="#000000"
-                    android:singleLine="true"
-                    android:textCursorDrawable="@drawable/cursor_colour"
-                    android:textSize="@dimen/textsize2"
-                    android:padding="@dimen/padding1"
-                    />
+                <!--<EditText-->
+                    <!--android:id="@+id/edt_last_name"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="Enter Last Name"-->
+                    <!--android:background="@drawable/field_back"-->
+                    <!--android:textColor="#000000"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:textCursorDrawable="@drawable/cursor_colour"-->
+                    <!--android:textSize="@dimen/textsize2"-->
+                    <!--android:padding="@dimen/padding1"-->
+                    <!--/>-->
 
-            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+            <!--</com.wrapp.floatlabelededittext.FloatLabeledEditText>-->
 
             <com.wrapp.floatlabelededittext.FloatLabeledEditText
                 android:layout_width="match_parent"
@@ -286,10 +286,10 @@ android:orientation="vertical"
                 float:fletPadding="5dp">
 
                 <EditText
-                    android:id="@+id/edt_comment"
+                    android:id="@+id/edt_reason_for_visit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Comment"
+                    android:hint="Reason For Visit"
                     android:background="@drawable/field_back"
                     android:textColor="#000000"
                     android:textCursorDrawable="@drawable/cursor_colour"
@@ -301,25 +301,25 @@ android:orientation="vertical"
 
 
 
-            <android.support.v7.widget.AppCompatRatingBar
-                android:id="@+id/rating_bar_doctor"
-                android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_weight="2.5"
-                android:layout_height="wrap_content"
-                style = "?android:attr/ratingBarStyleIndicator"
-                android:numStars = "5"
-                android:rating   = "4" />
+            <!--<android.support.v7.widget.AppCompatRatingBar-->
+                <!--android:id="@+id/rating_bar_doctor"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_weight="2.5"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--style = "?android:attr/ratingBarStyleIndicator"-->
+                <!--android:numStars = "5"-->
+                <!--android:rating   = "4" />-->
             <!--android:text="1234"-->
 
 
             <TextView
-                android:id="@+id/btn_register"
+                android:id="@+id/btn_book_appointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding1"
-                android:text="Submit"
+                android:text="Book Appointment"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:background="@drawable/button_back"

@@ -3,7 +3,7 @@
     xmlns:float="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="technopreneurs.myapplication.MyProfileFragment">
+    tools:context=".UICore.Detail.MyProfileFragment">
 
 
 
@@ -30,10 +30,11 @@
                     android:id="@+id/edt_first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter First Name"
+                    android:hint="First Name"
                     android:background="@drawable/field_back"
                     android:textColor="#000000"
                     android:singleLine="true"
+                    android:enabled="false"
                     android:textCursorDrawable="@drawable/cursor_colour"
                     android:textSize="@dimen/textsize2"
                     android:padding="@dimen/padding1"
@@ -53,10 +54,11 @@
                     android:id="@+id/edt_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Last Name"
+                    android:hint="Last Name"
                     android:background="@drawable/field_back"
                     android:textColor="#000000"
                     android:singleLine="true"
+                    android:enabled="false"
                     android:textCursorDrawable="@drawable/cursor_colour"
                     android:textSize="@dimen/textsize2"
                     android:padding="@dimen/padding1"
@@ -75,11 +77,12 @@
                     android:id="@+id/edt_mobile_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Mobile Number"
+                    android:hint="Mobile Number"
                     android:background="@drawable/field_back"
                     android:textColor="#000000"
                     android:singleLine="true"
-                    android:inputType="number"
+                    android:inputType="none"
+                    android:enabled="false"
                     android:textCursorDrawable="@drawable/cursor_colour"
                     android:textSize="@dimen/textsize2"
                     android:padding="@dimen/padding1"
@@ -94,14 +97,15 @@
                 float:fletPadding="5dp">
 
                 <EditText
-                    android:id="@+id/edt_email_address"
+                    android:id="@+id/edt_email_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Email"
+                    android:hint="Email"
                     android:background="@drawable/field_back"
                     android:textColor="#000000"
                     android:singleLine="true"
-                    android:inputType="textEmailAddress"
+                    android:inputType="none"
+                    android:enabled="false"
                     android:textCursorDrawable="@drawable/cursor_colour"
                     android:textSize="@dimen/textsize2"
                     android:padding="@dimen/padding1"
@@ -112,39 +116,40 @@
 
             <!--android:text="1234"-->
 
-            <RadioGroup
-                android:id="@+id/radioUserType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="4"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                >
+            <!--<RadioGroup-->
+                <!--android:id="@+id/radioUserType"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:weightSum="4"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--&gt;-->
 
-                <RadioButton android:id="@+id/radio_patient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/textsize2"
-                    android:text="Patient"
-                    android:layout_weight="2"/>
-                <RadioButton android:id="@+id/radio_doctor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Doctor"
-                    android:textSize="@dimen/textsize2"
-                    android:layout_weight="2"
+                <!--&lt;!&ndash;<RadioButton android:id="@+id/radio_patient"&ndash;&gt;-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="@dimen/textsize2"-->
+                    <!--android:text="Patient"-->
+                    <!--android:layout_weight="2"/>-->
+                <!--<RadioButton android:id="@+id/radio_doctor"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="Doctor"-->
+                    <!--android:textSize="@dimen/textsize2"-->
+                    <!--android:layout_weight="2"-->
 
-                    />
-            </RadioGroup>
+                    <!--/>-->
+            <!--</RadioGroup>-->
 
 
             <TextView
-                android:id="@+id/btn_register"
+                android:id="@+id/btn_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding1"
-                android:text="Register"
+                android:layout_marginTop="@dimen/padding1"
+                android:text="Update"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:background="@drawable/button_back"

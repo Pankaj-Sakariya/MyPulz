@@ -21,5 +21,7 @@ public class Constant {
     }
     public static String TAG_jArray_customer_detail = "customer_detail";
     public static String TAG_jArray_category = "category";
+    public static String TAG_jArray_vendor = "vendor";
+    public static String TAG_jArray_area = "area";
 
 }

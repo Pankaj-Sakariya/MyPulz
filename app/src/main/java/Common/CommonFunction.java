@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -78,17 +80,66 @@ public class CommonFunction {
         return matcher.matches();
     }
 
-    public static void showActivitityIndicater(Activity activity,String Message)
+    public static void showActivityIndicator(Activity activity,String Message)
     {
         p = new ProgressDialog(activity);
         p.setMessage(Message);
         p.setCancelable(false);
         p.show();
     }
-    public static void HideActivitityIndicater(Activity activity)
+    public static void HideActivityIndicator(Activity activity)
     {
         p.dismiss();
     }
+
+
+    public ArrayList parseJsonArrayToMap(JSONArray jsonArray,String key_name){
+//        Map<Integer,String> mapList = null;
+
+        ArrayList<String> arrayList = new ArrayList<String>();
+        for(int i=0;i<jsonArray.length();i++)
+        {
+            try {
+                JSONObject j = jsonArray.getJSONObject(i);
+                if(j.has(key_name))
+                {
+//                    mapList.put(i,j.getString(key_name));
+                    arrayList.add(i,j.getString(key_name));
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return arrayList;
+    }
+
+
+    public String parseStringFromJsonArray(JSONArray jsonArray,String key_name){
+//        Map<Integer,String> mapList = null;
+
+        String key_value = null;
+        for(int i=0;i<jsonArray.length();i++)
+        {
+            try {
+                JSONObject j = jsonArray.getJSONObject(i);
+                if(j.has(key_name))
+                {
+                    key_value = j.getString(key_name);
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return key_value;
+    }
+
+
 
 
 

@@ -52,8 +52,8 @@
                 android:layout_height="wrap_content"
                 float:fletPadding="5dp">
 
-                <EditText
-                    android:id="@+id/edt_village_name"
+                <AutoCompleteTextView
+                    android:id="@+id/txt_area_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -95,8 +95,8 @@
                 float:fletPadding="5dp">
 
 
-                <EditText
-                    android:id="@+id/edt_remarks"
+                <AutoCompleteTextView
+                    android:id="@+id/txt_vendor_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"

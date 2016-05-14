@@ -1,7 +1,10 @@
 package com.example.mypulz.UICore.Detail;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,9 +12,27 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.example.mypulz.R;
+import com.example.mypulz.UICore.Security.LoginActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import Common.CommonFunction;
+import Common.Constant;
+import DataProvider.SecurityDataProvider;
+import Interface.HttpCallback;
+import Model.FindDoctorModel;
+import Model.LoginModel;
 
 
 /**
@@ -31,6 +52,23 @@ public class FindDoctorFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    JSONArray jsonArray_category = null;
+    JSONArray jsonArray_area = null;
+    JSONArray jsonArray_vendor = null;
+
+    Spinner spinner_activity;
+    AutoCompleteTextView txt_area_name,txt_vendor_name;
+
+    ArrayList<String> arrayList_category_data;
+    ArrayList<String> arrayList_area_data;
+    ArrayList<String> arrayList_vendor_data;
+
+    ArrayAdapter<String> spinner_activity_adapter;
+    ArrayAdapter<String> txt_area_adapter;
+    ArrayAdapter<String> txt_vendor_adapter;
+
+    AsyncTask HttpServiceCallFindDoctor = null;
 
     Button btn_search;
 
@@ -70,10 +108,64 @@ public class FindDoctorFragment extends Fragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_find_doctor, container, false);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        initializeWidget(view);
+
+    }
+
+    private void initializeWidget(View view) {
+
         btn_search = (Button)view.findViewById(R.id.btn_search);
-        setonClickListener();
+        spinner_activity = (Spinner)view.findViewById(R.id.spinner_activity);
+        txt_area_name = (AutoCompleteTextView)view.findViewById(R.id.txt_area_name);
+        txt_vendor_name = (AutoCompleteTextView)view.findViewById(R.id.txt_vendor_name);
+        setData();
+
+    }
+
+    private void setData() {
+
+
+        String str_category_data =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_category, getContext());
+        String str_area_data =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_area, getContext());
+        String str_vendor_data =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_vendor, getContext());
+//       new CommonFunction().showAlertDialog(data,"Response",getContext());
+
+        try {
+            jsonArray_category = new JSONArray(str_category_data);
+            jsonArray_area = new JSONArray(str_area_data);
+            jsonArray_vendor = new JSONArray(str_vendor_data);
+
+            arrayList_category_data = new CommonFunction().parseJsonArrayToMap(jsonArray_category,"category_name");
+            arrayList_area_data = new CommonFunction().parseJsonArrayToMap(jsonArray_area,"area_name");
+            arrayList_vendor_data = new CommonFunction().parseJsonArrayToMap(jsonArray_vendor,"full_name");
+//            new CommonFunction().showAlertDialog(arrayList_vendor_data.toString(),"Response",getContext());
+
+            spinner_activity_adapter = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_item, arrayList_category_data);
+            spinner_activity.setAdapter(spinner_activity_adapter);
+
+            txt_area_adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, arrayList_area_data);
+            txt_area_name.setAdapter(txt_area_adapter);
+
+            txt_vendor_adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, arrayList_vendor_data);
+            txt_vendor_name.setAdapter(txt_vendor_adapter);
+
+            setonClickListener();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void setonClickListener() {
@@ -82,14 +174,96 @@ public class FindDoctorFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                DoctorListFragment dFragment = new DoctorListFragment();
-                changeFragment(dFragment);
+                httpServiceCall();
+                HttpServiceCallFindDoctor.execute(null);
+
+//                DoctorListFragment dFragment = new DoctorListFragment();
+//                changeFragment(dFragment);
 
             }
         });
 
-
     }
+
+    private void httpServiceCall() {
+        CommonFunction.showActivityIndicator(getActivity(),getResources().getString(R.string.title_for_activityIndicater));
+        HttpServiceCallFindDoctor = new AsyncTask() {
+            JSONObject response;
+            String findDoctorGetModel = FindDoctorModel.FindDoctorGetModel(spinner_activity.getSelectedItem().toString(),txt_area_name.getText().toString(),txt_vendor_name.getText().toString());
+            @Override
+            protected Object doInBackground(Object[] params) {
+                SecurityDataProvider.FindDoctor(getActivity(),findDoctorGetModel, new HttpCallback() {
+                    @Override
+                    public void callbackFailure(Object result) {
+                        System.out.println(result);
+                    }
+                    @Override
+                    public void callbackSuccess(Object result) {
+                        CommonFunction.HideActivityIndicator(getActivity());
+                        System.out.println(result);
+                        try {
+                            response = new JSONObject(result.toString());
+                            System.out.println("pankaj"+response);
+                            new CommonFunction().showAlertDialog(response.toString(),"Testing",getContext());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                });
+                return null;
+            }
+
+//            @Override
+//            protected void onPostExecute(Object o) {
+//                super.onPostExecute(o);
+//
+//
+//                JSONArray jsonArray_customer_detail,jsonArray_category,jsonArray_vendor,jsonArray_area;
+//
+//                try {
+//                    if(response.has("status")) {
+//                        if (response.getString("status") == "1") {
+//                            if (response.has("message")) {
+//                                String Message = response.getString("message");
+//
+//                                /** Parse Json Array Using Common Function**/
+//                                jsonArray_customer_detail = new CommonFunction().parseJsonArray(Constant.TAG_jArray_customer_detail, response);
+//                                jsonArray_category = new CommonFunction().parseJsonArray(Constant.TAG_jArray_category, response);
+//                                jsonArray_vendor = new CommonFunction().parseJsonArray(Constant.TAG_jArray_vendor, response);
+//                                jsonArray_area = new CommonFunction().parseJsonArray(Constant.TAG_jArray_area, response);
+//
+//                                /** Save array in preference as string Using Common Function**/
+//                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_customer_detail, jsonArray_customer_detail.toString(), activity);
+//                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_category, jsonArray_category.toString(), activity);
+//                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_vendor, jsonArray_vendor.toString(), activity);
+//                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_area, jsonArray_area.toString(), activity);
+//                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+//                                startActivity(i);
+//                                finish();
+//                            }
+//
+//                        }
+//                    }
+//                    else if(response.has("status") && response.getString("status")=="0")
+//                    {
+//                        if(response.has("message")) {
+//                            String Message = response.getString("message");
+//                            new CommonFunction().showAlertDialog(Message,"Testing",activity);
+//                        }
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+        };
+    }
+
+
+
 
     public void changeFragment(Fragment newFragment)
     {
@@ -106,12 +280,7 @@ public class FindDoctorFragment extends Fragment {
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_find_doctor, container, false);
-    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

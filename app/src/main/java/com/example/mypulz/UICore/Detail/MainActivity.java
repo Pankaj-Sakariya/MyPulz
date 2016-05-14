@@ -1,5 +1,6 @@
 package com.example.mypulz.UICore.Detail;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,15 +17,27 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.mypulz.UICore.Detail.dummy.DummyContent;
 
 import com.example.mypulz.R;
 import com.example.mypulz.UICore.Security.LoginActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import Common.CommonFunction;
+import Common.Constant;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , DoctorListFragment.OnListFragmentInteractionListener, MyProfileFragment.OnFragmentInteractionListener,FindDoctorFragment.OnFragmentInteractionListener, ReviewDoctorFragment.OnFragmentInteractionListener , BookAppointmentFragment.OnFragmentInteractionListener, MyAppointmentFragment.OnListFragmentInteractionListener{
     private boolean viewIsAtHome;
+
+    TextView txt_full_name,txt_email_id;
+    Activity activity = null;
+
+    JSONArray jsonArray_customer_detail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +45,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        activity = this;
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -51,9 +66,46 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_find_doctor);
         displayView(R.id.nav_find_doctor);
+
+        initializeWidget(navigationView);
+    }
+
+    private void initializeWidget(NavigationView navigationView) {
+
+        View hView =  navigationView.getHeaderView(0);
+//        TextView nav_user = (TextView)hView.findViewById(R.id.nav_name);
+//        nav_user.setText(user);
+        txt_full_name = (TextView)hView.findViewById(R.id.txt_full_name);
+        txt_email_id = (TextView)hView.findViewById(R.id.txt_email_id);
+
+        setData();
+
+    }
+
+    private void setData() {
+
+        String str_customer_detail =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_customer_detail, getApplicationContext());
+        System.out.println("!!!!pankaj_customer_detail"+str_customer_detail);
+//        new CommonFunction().showAlertDialog(str_customer_detail,"Response",activity);
+        String str_full_name = null;
+        String str_email_id = null;
+
+
+        try {
+            jsonArray_customer_detail = new JSONArray(str_customer_detail);
+            str_full_name = new CommonFunction().parseStringFromJsonArray(jsonArray_customer_detail,"full_name");
+            str_email_id = new CommonFunction().parseStringFromJsonArray(jsonArray_customer_detail,"email_id");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        txt_full_name.setText(str_full_name);
+        txt_email_id.setText(str_email_id);
     }
 
 //    @Override

@@ -1,18 +1,20 @@
 package Model;
 
-import org.json.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
- * Created by Murtuza on 5/1/2016.
+ * Created by Pankaj Sakariya on 14/05/2016.
  */
-public class LoginModel {
+public class FindDoctorModel {
 
-    public static String LoginPostModel(String mobile_number, String otp_number)
+    public static String FindDoctorGetModel(String category, String area_name, String vendor_name)
     {
         JSONObject object = new JSONObject();
         try {
-            object.put("mobile_number",mobile_number);
-            object.put("otp_number",otp_number);
+            object.put("category",category);
+            object.put("area_name",area_name);
+            object.put("vendor_name",vendor_name);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -46,4 +48,3 @@ public class LoginModel {
         return object.toString();
     }
 }
-

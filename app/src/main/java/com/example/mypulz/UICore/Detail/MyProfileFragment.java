@@ -3,12 +3,20 @@ package com.example.mypulz.UICore.Detail;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.mypulz.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import Common.CommonFunction;
+import Common.Constant;
 
 
 /**
@@ -28,6 +36,9 @@ public class MyProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    EditText edt_first_name,edt_last_name,edt_mobile_number,edt_email_id;
+    JSONArray jsonArray_customer_detail;
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,6 +78,50 @@ public class MyProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_profile, container, false);
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initializeWidget(view);
+    }
+
+    private void initializeWidget(View view) {
+
+        edt_first_name = (EditText)view.findViewById(R.id.edt_first_name);
+        edt_last_name = (EditText)view.findViewById(R.id.edt_last_name);
+        edt_email_id = (EditText)view.findViewById(R.id.edt_email_id);
+        edt_mobile_number = (EditText)view.findViewById(R.id.edt_mobile_number);
+
+        setData();
+    }
+
+    private void setData() {
+
+        String str_customer_detail =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_customer_detail, getContext());
+        System.out.println("!!!!pankaj_customer_detail"+str_customer_detail);
+//        new CommonFunction().showAlertDialog(str_customer_detail,"Response",getContext());
+        String str_first_name = null;
+        String str_last_name = null;
+        String str_mobile_number = null;
+        String str_email_id = null;
+
+
+        try {
+            jsonArray_customer_detail = new JSONArray(str_customer_detail);
+            str_first_name = new CommonFunction().parseStringFromJsonArray(jsonArray_customer_detail,"first_name");
+            str_last_name = new CommonFunction().parseStringFromJsonArray(jsonArray_customer_detail,"last_name");
+            str_mobile_number = new CommonFunction().parseStringFromJsonArray(jsonArray_customer_detail,"mobile_number");
+            str_email_id = new CommonFunction().parseStringFromJsonArray(jsonArray_customer_detail,"email_id");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        edt_first_name.setText(str_first_name);
+        edt_last_name.setText(str_last_name);
+        edt_mobile_number.setText(str_mobile_number);
+        edt_email_id.setText(str_email_id);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

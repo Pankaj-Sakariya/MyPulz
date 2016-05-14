@@ -12,9 +12,12 @@ import android.widget.TextView;
 import com.example.mypulz.R;
 import com.example.mypulz.UICore.Detail.MainActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import Common.CommonFunction;
+import Common.Constant;
 import DataProvider.SecurityDataProvider;
 import Interface.HttpCallback;
 import Model.LoginModel;
@@ -87,7 +90,7 @@ public class LoginActivity extends Activity {
         return  flag;
     }
     private void httpServiceCall() {
-        CommonFunction.showActivitityIndicater(activity,getResources().getString(R.string.title_for_activityIndicater));
+        CommonFunction.showActivityIndicator(activity,getResources().getString(R.string.title_for_activityIndicater));
         HttpServiceCallLogin = new AsyncTask() {
             JSONObject response;
             String loginPostModel = LoginModel.LoginPostModel(txtMobileNumber.getText().toString(),txtOtpPassword.getText().toString());
@@ -100,49 +103,64 @@ public class LoginActivity extends Activity {
                     }
                     @Override
                     public void callbackSuccess(Object result) {
-                        CommonFunction.HideActivitityIndicater(activity);
+                        CommonFunction.HideActivityIndicator(activity);
                         System.out.println(result);
-                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(i);
-                        finish();
-//                        try {
-//                            response = new JSONObject(result.toString());
-//                            JSONArray jsonArray_customer_detail,jsonArray_category;
-//                            System.out.println("pankaj"+response);
-//                            try {
-//                                if(response.has("status")) {
-//                                    if (response.getString("status") == "1") {
-//                                        if (response.has("message")) {
-//                                            String Message = response.getString("message");
-//                                            /** Parse Json Array Using Common Function**/
-//                                            jsonArray_customer_detail = new CommonFunction().parseJsonArray(Constant.TAG_jArray_customer_detail, response);
-//                                            jsonArray_category = new CommonFunction().parseJsonArray(Constant.TAG_jArray_category, response);
-//                                            /** Save array in preference as string Using Common Function**/
-//                                            new CommonFunction().saveSharedPreference(Constant.TAG_jArray_customer_detail, jsonArray_customer_detail.toString(), activity);
-//                                            new CommonFunction().saveSharedPreference(Constant.TAG_jArray_category, jsonArray_category.toString(), activity);
-//                                        }
-//
-//                                    }
-//                                }
-//                                else if(response.has("status") && response.getString("status")=="0")
-//                                {
-//                                    if(response.has("message")) {
-//                                        String Message = response.getString("message");
-//                                        new CommonFunction().showAlertDialog(Message,"Testing",activity);
-//                                    }
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            response = new JSONObject(result.toString());
+                            System.out.println("pankaj"+response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
                     }
                 });
                 return null;
             }
 
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+
+
+                JSONArray jsonArray_customer_detail,jsonArray_category,jsonArray_vendor,jsonArray_area;
+
+                try {
+                    if(response.has("status")) {
+                        if (response.getString("status") == "1") {
+                            if (response.has("message")) {
+                                String Message = response.getString("message");
+
+                                /** Parse Json Array Using Common Function**/
+                                jsonArray_customer_detail = new CommonFunction().parseJsonArray(Constant.TAG_jArray_customer_detail, response);
+                                jsonArray_category = new CommonFunction().parseJsonArray(Constant.TAG_jArray_category, response);
+                                jsonArray_vendor = new CommonFunction().parseJsonArray(Constant.TAG_jArray_vendor, response);
+                                jsonArray_area = new CommonFunction().parseJsonArray(Constant.TAG_jArray_area, response);
+
+                                /** Save array in preference as string Using Common Function**/
+                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_customer_detail, jsonArray_customer_detail.toString(), activity);
+                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_category, jsonArray_category.toString(), activity);
+                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_vendor, jsonArray_vendor.toString(), activity);
+                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_area, jsonArray_area.toString(), activity);
+                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+
+                        }
+                    }
+                    else if(response.has("status") && response.getString("status")=="0")
+                    {
+                        if(response.has("message")) {
+                            String Message = response.getString("message");
+                            new CommonFunction().showAlertDialog(Message,"Testing",activity);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
         };
     }
 

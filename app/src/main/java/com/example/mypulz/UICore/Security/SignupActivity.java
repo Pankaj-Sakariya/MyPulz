@@ -126,7 +126,7 @@ public class SignupActivity extends Activity {
 
 
     private void httpServiceCall() {
-        CommonFunction.showActivitityIndicater(activity,getResources().getString(R.string.title_for_activityIndicater));
+        CommonFunction.showActivityIndicator(activity,getResources().getString(R.string.title_for_activityIndicater));
         HttpServiceCallSignup = new AsyncTask() {
             JSONObject response;
 
@@ -146,34 +146,12 @@ public class SignupActivity extends Activity {
                     @Override
                     public void callbackSuccess(Object result) {
                         System.out.println(result);
-                        CommonFunction.HideActivitityIndicater(activity);
+                        CommonFunction.HideActivityIndicator(activity);
                         try {
                             response = new JSONObject(result.toString());
-                            JSONArray jsonArray_customer_detail,jsonArray_category;
+//                            JSONArray jsonArray_customer_detail,jsonArray_category;
                             System.out.println("pankaj"+response);
-                            try {
 
-                                if(response.has("status") && response.getString("status")=="1")
-                                {
-                                    if(response.has("message"))
-                                    {
-                                        String Message = response.getString("message");
-                                        new CommonFunction().showAlertDialog(Message,"Testing",activity);
-                                    }
-                                    Intent i = new Intent(SignupActivity.this,LoginActivity.class);
-                                    startActivity(i);
-                                    finish();
-                                }
-                                else if(response.has("status") && response.getString("status")=="0")
-                                {
-                                    if(response.has("message")) {
-                                        String Message = response.getString("message");
-                                        new CommonFunction().showAlertDialog(Message,"Testing",activity);
-                                    }
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -182,6 +160,33 @@ public class SignupActivity extends Activity {
                 return null;
             }
 
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                try {
+
+                    if(response.has("status") && response.getString("status")=="1")
+                    {
+                        if(response.has("message"))
+                        {
+                            String Message = response.getString("message");
+                            new CommonFunction().showAlertDialog(Message,"Response",activity);
+                        }
+                        Intent i = new Intent(SignupActivity.this,LoginActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                    else if(response.has("status") && response.getString("status")=="0")
+                    {
+                        if(response.has("message")) {
+                            String Message = response.getString("message");
+                            new CommonFunction().showAlertDialog(Message,"Response",activity);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         };
     }
 
