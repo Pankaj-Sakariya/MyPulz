@@ -122,10 +122,13 @@ android:paddingTop="5dp"
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/btn_book_appointment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Review"
-            android:id="@+id/btn_doctor_review"
+            android:text="Book \n Appointment"
+            android:singleLine="false"
+            android:textAlignment="center"
+            android:padding="@dimen/padding1"
             android:background="@drawable/button_back"
             android:textColor="@color/white"
 

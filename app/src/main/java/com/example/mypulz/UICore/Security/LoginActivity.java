@@ -103,7 +103,7 @@ public class LoginActivity extends Activity {
                     }
                     @Override
                     public void callbackSuccess(Object result) {
-                        CommonFunction.HideActivityIndicator(activity);
+
                         System.out.println(result);
                         try {
                             response = new JSONObject(result.toString());
@@ -111,8 +111,6 @@ public class LoginActivity extends Activity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 });
                 return null;
@@ -120,14 +118,15 @@ public class LoginActivity extends Activity {
 
             @Override
             protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
 
+                 super.onPostExecute(o);
+                CommonFunction.HideActivityIndicator(activity);
 
                 JSONArray jsonArray_customer_detail,jsonArray_category,jsonArray_vendor,jsonArray_area;
 
                 try {
                     if(response.has("status")) {
-                        if (response.getString("status") == "1") {
+                        if (response.getInt("status") == 1 ) {
                             if (response.has("message")) {
                                 String Message = response.getString("message");
 

@@ -1,8 +1,6 @@
 package com.example.mypulz.UICore.Detail;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,21 +16,18 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.mypulz.R;
-import com.example.mypulz.UICore.Security.LoginActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import Common.CommonFunction;
 import Common.Constant;
 import DataProvider.SecurityDataProvider;
 import Interface.HttpCallback;
 import Model.FindDoctorModel;
-import Model.LoginModel;
 
 
 /**
@@ -177,8 +172,6 @@ public class FindDoctorFragment extends Fragment {
                 httpServiceCall();
                 HttpServiceCallFindDoctor.execute(null);
 
-//                DoctorListFragment dFragment = new DoctorListFragment();
-//                changeFragment(dFragment);
 
             }
         });
@@ -204,7 +197,9 @@ public class FindDoctorFragment extends Fragment {
                         try {
                             response = new JSONObject(result.toString());
                             System.out.println("pankaj"+response);
-                            new CommonFunction().showAlertDialog(response.toString(),"Testing",getContext());
+                            DoctorListFragment dFragment = new DoctorListFragment();
+                            changeFragment(dFragment);
+                            //new CommonFunction().showAlertDialog(response.toString(),"Testing",getContext());
 
                         } catch (JSONException e) {
                             e.printStackTrace();

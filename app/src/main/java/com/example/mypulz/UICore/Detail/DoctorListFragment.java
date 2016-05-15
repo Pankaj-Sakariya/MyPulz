@@ -26,6 +26,7 @@ public class DoctorListFragment extends Fragment {
 
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    Fragment fragment = null;
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -47,6 +48,7 @@ public class DoctorListFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public DoctorListFragment() {
+
     }
 
     @Override
@@ -61,6 +63,7 @@ public class DoctorListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_doctorlist_list, container, false);
 
         // Set the adapter
@@ -72,11 +75,13 @@ public class DoctorListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyDoctorListRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-
+            recyclerView.setAdapter(new MyDoctorListRecyclerViewAdapter(DummyContent.ITEMS, mListener,getActivity()));
         }
+
+
         return view;
     }
+
 
     public void changeFragment(Fragment newFragment)
     {
