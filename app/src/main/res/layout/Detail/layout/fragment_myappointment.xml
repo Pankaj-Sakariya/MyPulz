@@ -164,6 +164,7 @@
 
                     <TextView
                         android:id="@+id/tv_speciality"
+                        android:paddingBottom="@dimen/padding1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -185,7 +186,7 @@
 
                     <Button
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         android:text="Review"
                         android:id="@+id/btn_doctor_review"
                         android:background="@drawable/button_back"

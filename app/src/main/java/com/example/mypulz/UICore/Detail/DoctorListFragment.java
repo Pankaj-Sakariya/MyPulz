@@ -30,7 +30,6 @@ public class DoctorListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-
     private OnListFragmentInteractionListener mListener;
 
     // TODO: Customize parameter initialization
@@ -59,6 +58,7 @@ public class DoctorListFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

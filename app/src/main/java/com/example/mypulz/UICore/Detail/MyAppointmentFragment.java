@@ -1,6 +1,7 @@
 package com.example.mypulz.UICore.Detail;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +14,13 @@ import android.view.ViewGroup;
 import com.example.mypulz.UICore.Detail.dummy.DummyContent;
 import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
 import com.example.mypulz.R;
+
+import org.json.JSONObject;
+
+import Common.CommonFunction;
+import DataProvider.SecurityDataProvider;
+import Interface.HttpCallback;
+import Model.LoginModel;
 
 /**
  * A fragment representing a list of Items.
@@ -27,6 +35,7 @@ public class MyAppointmentFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    AsyncTask HttpServiceCallMyAppointment = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -68,7 +77,7 @@ public class MyAppointmentFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyAppointmentRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyAppointmentRecyclerViewAdapter(DummyContent.ITEMS, mListener,getActivity()));
         }
         return view;
     }
@@ -91,6 +100,34 @@ public class MyAppointmentFragment extends Fragment {
         mListener = null;
     }
 
+    private void httpServiceCall() {
+        CommonFunction.showActivityIndicator(getActivity(),getResources().getString(R.string.title_for_activityIndicater));
+        HttpServiceCallMyAppointment = new AsyncTask() {
+            JSONObject response;
+            String myAppointmentGetModel = LoginModel.MyAppointmentGetModel("");
+            @Override
+            protected Object doInBackground(Object[] params) {
+                SecurityDataProvider.MyAppointment(getActivity(),myAppointmentGetModel, new HttpCallback() {
+                    @Override
+                    public void callbackFailure(Object result) {
+                        System.out.println(result);
+                    }
+                    @Override
+                    public void callbackSuccess(Object result) {
+
+                    }
+                });
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Object o) {
+
+                super.onPostExecute(o);
+                CommonFunction.HideActivityIndicator(getActivity());
+
+            }
+        };
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

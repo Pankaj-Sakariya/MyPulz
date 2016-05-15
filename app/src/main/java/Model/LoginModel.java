@@ -16,8 +16,6 @@ public class LoginModel {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
         return object.toString();
     }
 
@@ -41,8 +39,45 @@ public class LoginModel {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return object.toString();
+    }
+    public static String BookAppointmentGetModel(String first_name, String last_name, String mobile_number, String docterId,String date,String Time)
+    {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("first_name",first_name);
+            object.put("last_name",last_name);
+            object.put("mobile_number",mobile_number);
+            object.put("docterId",docterId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object.toString();
+    }
+
+    public static String ReviewDocterGetModel(String docterId,String rating,String mode)
+    {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("rating",rating);
+            object.put("mode",mode);
+            object.put("docterId",docterId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
+        return object.toString();
+    }
+
+    public static String MyAppointmentGetModel(String userId)
+    {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("userId",userId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return object.toString();
     }
 }

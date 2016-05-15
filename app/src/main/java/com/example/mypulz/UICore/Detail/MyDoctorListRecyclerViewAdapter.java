@@ -1,11 +1,13 @@
 package com.example.mypulz.UICore.Detail;
 
 import android.app.Dialog;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,7 +16,17 @@ import com.example.mypulz.R;
 import com.example.mypulz.UICore.Detail.DoctorListFragment.OnListFragmentInteractionListener;
 import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
+
+import Common.CommonFunction;
+import Common.Constant;
+import DataProvider.SecurityDataProvider;
+import Interface.HttpCallback;
+import Model.LoginModel;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -26,7 +38,7 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
     private final FragmentActivity mfragment;
-
+    AsyncTask HttpServiceCallBookAppointment = null;
     public MyDoctorListRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
         mValues = items;
         mListener = listener;
@@ -51,19 +63,26 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
             public void onClick(View v) {
                 System.out.println("!!!!pankaj_click on list"+holder.mItem);
                 final Dialog dialog = new Dialog(mfragment);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
                 dialog.setContentView(R.layout.dilog_book_appointment);
-                dialog.setTitle("Book Appointment");
-
-
-
 
                 // set the custom dialog components - text, image and button
 
                 Button dialogButton = (Button) dialog
                         .findViewById(R.id.btn_book_appointment);
-                EditText tvName=(EditText)dialog.findViewById(R.id.edt_patient_name);
-                EditText tvPhNo=(EditText)dialog.findViewById(R.id.edt_mobile_number);
-                EditText tvEmail=(EditText)dialog.findViewById(R.id.edt_reason_for_visit);
+                EditText edt_patient_name=(EditText)dialog.findViewById(R.id.edt_patient_name);
+                EditText edt_mobile_number=(EditText)dialog.findViewById(R.id.edt_mobile_number);
+                EditText edt_reason_for_visit=(EditText)dialog.findViewById(R.id.edt_reason_for_visit);
+                String str_customer_detail =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_customer_detail, mfragment);
+                JSONArray jsonArray_customer_detail = null;
+                try {
+                    jsonArray_customer_detail = new JSONArray(str_customer_detail);
+                    edt_patient_name.setText(new CommonFunction().parseStringFromJsonArray(jsonArray_customer_detail,"first_name"));
+                    edt_mobile_number.setText(new CommonFunction().parseStringFromJsonArray(jsonArray_customer_detail,"last_name"));
+                    edt_reason_for_visit.setText (new CommonFunction().parseStringFromJsonArray(jsonArray_customer_detail,"mobile_number"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 // if button is clicked, close the custom dialog
                 dialogButton.setOnClickListener(new View.OnClickListener() {
@@ -118,5 +137,36 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+    private void httpServiceCall() {
+        CommonFunction.showActivityIndicator(mfragment,mfragment.getResources().getString(R.string.title_for_activityIndicater));
+        HttpServiceCallBookAppointment = new AsyncTask() {
+            JSONObject response;
+            String bookAppointmentGetModel = LoginModel.BookAppointmentGetModel("","","","","","");
+            @Override
+            protected Object doInBackground(Object[] params) {
+                SecurityDataProvider.BookAppointment(mfragment,bookAppointmentGetModel, new HttpCallback() {
+                    @Override
+                    public void callbackFailure(Object result) {
+                        System.out.println(result);
+                    }
+                    @Override
+                    public void callbackSuccess(Object result) {
+
+                    }
+                });
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+
+                super.onPostExecute(o);
+                CommonFunction.HideActivityIndicator(mfragment);
+
+
+            }
+        };
     }
 }

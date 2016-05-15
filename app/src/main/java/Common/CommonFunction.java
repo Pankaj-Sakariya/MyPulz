@@ -6,13 +6,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -80,6 +80,13 @@ public class CommonFunction {
         return matcher.matches();
     }
 
+    public static void showActivityIndicator(FragmentActivity fragmentActivity, String Message)
+    {
+        p = new ProgressDialog(fragmentActivity);
+        p.setMessage(Message);
+        p.setCancelable(false);
+        p.show();
+    }
     public static void showActivityIndicator(Activity activity,String Message)
     {
         p = new ProgressDialog(activity);
@@ -91,7 +98,10 @@ public class CommonFunction {
     {
         p.dismiss();
     }
-
+    public static void HideActivityIndicator(FragmentActivity fragmentActivity)
+    {
+        p.dismiss();
+    }
 
     public ArrayList parseJsonArrayToMap(JSONArray jsonArray,String key_name){
 //        Map<Integer,String> mapList = null;

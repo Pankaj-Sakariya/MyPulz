@@ -88,17 +88,14 @@ public class MyProfileFragment extends Fragment {
     }
 
     private void initializeWidget(View view) {
-
         edt_first_name = (EditText)view.findViewById(R.id.edt_first_name);
         edt_last_name = (EditText)view.findViewById(R.id.edt_last_name);
         edt_email_id = (EditText)view.findViewById(R.id.edt_email_id);
         edt_mobile_number = (EditText)view.findViewById(R.id.edt_mobile_number);
-
         setData();
     }
 
     private void setData() {
-
         String str_customer_detail =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_customer_detail, getContext());
         System.out.println("!!!!pankaj_customer_detail"+str_customer_detail);
 //        new CommonFunction().showAlertDialog(str_customer_detail,"Response",getContext());
@@ -106,7 +103,6 @@ public class MyProfileFragment extends Fragment {
         String str_last_name = null;
         String str_mobile_number = null;
         String str_email_id = null;
-
 
         try {
             jsonArray_customer_detail = new JSONArray(str_customer_detail);
