@@ -62,8 +62,22 @@ android:paddingTop="5dp"
             android:gravity="left|center"
             android:singleLine="true"
             android:text="Dr. Flo Sabin MD"
+            android:paddingBottom="@dimen/padding2"
             android:textColor="#0a8feb"
             android:textSize="@dimen/textsize2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_doctor_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:gravity="left|center"
+            android:singleLine="true"
+            android:text="Dr. Flo Sabin MD"
+            android:textColor="#0a8feb"
+            android:textSize="@dimen/textsize2"
+            android:visibility="gone"
             android:textStyle="bold" />
 
         <TextView
@@ -72,7 +86,20 @@ android:paddingTop="5dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:gravity="left|center"
+            android:paddingBottom="@dimen/padding2"
             android:text="Sankalp Row House, main Cross Road, Isanpur, Ahmedabad -380051"
+            android:textColor="#4e5f6f"
+            android:textSize="@dimen/textsize12"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:gravity="left|center"
+            android:paddingBottom="@dimen/padding2"
+            android:text="9:00 AM To 10 PM"
             android:textColor="#4e5f6f"
             android:textSize="@dimen/textsize12"
             android:textStyle="bold" />
@@ -88,7 +115,7 @@ android:paddingTop="5dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="5"
-        android:padding="3dp" >
+        >
 
         <TextView
             android:id="@+id/tv_speciality"
@@ -99,6 +126,7 @@ android:paddingTop="5dp"
             android:gravity="left|center"
             android:text="Neuro Sergen"
             android:textColor="#0a8feb"
+            android:paddingBottom="@dimen/padding2"
             android:textSize="@dimen/textsize12"
             android:textStyle="bold" />
 
@@ -106,6 +134,7 @@ android:paddingTop="5dp"
             android:id="@+id/rating_bar_doctor"
             android:layout_width="wrap_content"
             android:layout_weight="2.5"
+            android:paddingBottom="@dimen/padding2"
             android:layout_height="wrap_content"
             style = "?android:attr/ratingBarStyleSmall"
             android:numStars = "5"
@@ -125,7 +154,7 @@ android:paddingTop="5dp"
             android:id="@+id/btn_book_appointment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Book \n Appointment"
+            android:text="Book Appointment"
             android:singleLine="false"
             android:textAlignment="center"
             android:padding="@dimen/padding1"

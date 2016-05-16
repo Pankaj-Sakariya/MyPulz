@@ -151,6 +151,25 @@
 
                 </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
+                <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    float:fletPadding="5dp">
+
+                    <EditText
+                        android:id="@+id/edt_datetime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Select Date Time"
+                        android:background="@drawable/field_back"
+                        android:textColor="#000000"
+                        android:textCursorDrawable="@drawable/cursor_colour"
+                        android:textSize="@dimen/textsize2"
+                        android:padding="@dimen/padding1"
+                        />
+
+                </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
 
 
                 <!--<android.support.v7.widget.AppCompatRatingBar-->
@@ -164,6 +183,7 @@
                 <!--android:numStars = "5"-->
                 <!--android:rating   = "4" />-->
                 <!--android:text="1234"-->
+
 
 
                 <Button

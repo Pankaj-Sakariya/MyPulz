@@ -197,8 +197,17 @@ public class FindDoctorFragment extends Fragment {
                         try {
                             response = new JSONObject(result.toString());
                             System.out.println("pankaj"+response);
-                            DoctorListFragment dFragment = new DoctorListFragment();
-                            changeFragment(dFragment);
+                            if(response.optJSONArray("data").length() == 0)
+                            {
+                                new CommonFunction().showAlertDialog("Search Result Not Found.","Not Found",getActivity());
+                            }
+                            else
+                            {
+                                DoctorListFragment dFragment = new DoctorListFragment();
+                                dFragment.SearchDocterData = response;
+                                changeFragment(dFragment);
+                            }
+
                             //new CommonFunction().showAlertDialog(response.toString(),"Testing",getContext());
 
                         } catch (JSONException e) {

@@ -1,14 +1,18 @@
 package com.example.mypulz.UICore.Detail;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -20,7 +24,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import Common.CommonFunction;
 import Common.Constant;
@@ -35,11 +42,15 @@ import Model.LoginModel;
  */
 public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoctorListRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final JSONObject mValues;
     private final OnListFragmentInteractionListener mListener;
     private final FragmentActivity mfragment;
     AsyncTask HttpServiceCallBookAppointment = null;
-    public MyDoctorListRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
+    Calendar c;
+    int year, month, day;
+    java.sql.Date currDate;
+    String output;
+    public MyDoctorListRecyclerViewAdapter(JSONObject items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
         mValues = items;
         mListener = listener;
         mfragment = fragment;
@@ -54,14 +65,21 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        try{
+            holder.mtv_doctor_name.setText("Dr "+mValues.getJSONArray("data").getJSONObject(position).getString("first_name") +" "+ mValues.getJSONArray("data").getJSONObject(position).getString("last_name"));
+            holder.mtv_address.setText(mValues.getJSONArray("data").getJSONObject(position).getString("business_address")+" "+ mValues.getJSONArray("data").getJSONObject(position).getString("business_pincode"));
+            holder.mtv_speciality.setText(mValues.getJSONArray("data").getJSONObject(position).getString("first_name"));
+            holder.mtv_time.setText(mValues.getJSONArray("data").getJSONObject(position).getString("open_time") +" To "+ mValues.getJSONArray("data").getJSONObject(position).getString("close_time"));
+            //holder.mtv_doctor_id.setText(position.);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         holder.mBookAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("!!!!pankaj_click on list"+holder.mItem);
+                System.out.println(holder.getPosition());
                 final Dialog dialog = new Dialog(mfragment);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
                 dialog.setContentView(R.layout.dilog_book_appointment);
@@ -73,6 +91,8 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
                 EditText edt_patient_name=(EditText)dialog.findViewById(R.id.edt_patient_name);
                 EditText edt_mobile_number=(EditText)dialog.findViewById(R.id.edt_mobile_number);
                 EditText edt_reason_for_visit=(EditText)dialog.findViewById(R.id.edt_reason_for_visit);
+                EditText edt_datetime=(EditText)dialog.findViewById(R.id.edt_datetime);
+
                 String str_customer_detail =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_customer_detail, mfragment);
                 JSONArray jsonArray_customer_detail = null;
                 try {
@@ -91,52 +111,121 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
                         dialog.dismiss();
                     }
                 });
+                edt_datetime.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getCalenderView();
+                        setcalanderview();
+                    }
+                });
 
                 dialog.show();
             }
         });
-      /*  holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                    System.out.println("!!!!pankaj_click on list"+holder.mItem);
-                    BookAppointmentFragment newFragment =  new BookAppointmentFragment();
-
-
-                }
-            }
-        });*/
     }
 
+    @SuppressLint("SimpleDateFormat")
+    private void getCalenderView() {
+        // TODO Auto-generated method stub
 
+        c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+        currDate = new java.sql.Date(System.currentTimeMillis());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(new Date()); // Now use today date.
+        output = sdf.format(c1.getTime());
+
+
+    }
+
+    public void setcalanderview()
+    {
+
+        DatePickerDialog dpd = new DatePickerDialog(mfragment,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int selectedyear,
+                                          int monthOfYear, int dayOfMonth) {
+                        // TODO Auto-generated method stub
+
+                        year = selectedyear;
+                        month = monthOfYear;
+                        day = dayOfMonth;
+                        try {
+                            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(year + "-" + (month + 1) + "-" + day);
+
+                            DateFormat outputFormatter = new SimpleDateFormat("yyyy-MM-dd");
+                            String selectedDate = outputFormatter.format(date); // Output
+                            if (selectedDate.compareTo(currDate.toString()) >= 0 && selectedDate.compareTo(output.toString()) <= 0) {
+                                DateFormat outputFormatter1 = new SimpleDateFormat(
+                                        "dd MMM, yyyy");
+                                String date_formating = outputFormatter1.format(date);
+
+
+                            } else {
+                                // new CommonFunction().showAlertDialog("Invaid Date","Selecct Proper Date",activity);
+                            }
+                        } catch (java.text.ParseException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, year, month, day);
+        dpd.getDatePicker().setMinDate(c.getTimeInMillis());
+        c.add(Calendar.MONTH, 1);
+        dpd.getDatePicker().setMaxDate(c.getTimeInMillis());
+        c.add(Calendar.MONTH, -1);
+        dpd.show();
+        dpd.setCancelable(false);
+        dpd.setCanceledOnTouchOutside(false);
+    }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        try {
+            return mValues.getJSONArray("data").length();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mtv_doctor_name;
+        public final TextView mtv_address;
+        public final TextView mtv_speciality;
+        public final TextView mtv_doctor_id;
+        public final TextView mid;
+        public final TextView mtv_time;
+        public final AppCompatRatingBar mrating_bar_doctor;
+
+
+       // public final TextView mtv_doctor_name;
         public Button mBookAppointment;
-        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.tv_speciality);
-            mBookAppointment = (Button)view.findViewById(R.id.btn_book_appointment);
+            mtv_doctor_name = (TextView) view.findViewById(R.id.tv_doctor_name);
+            mtv_address = (TextView) view.findViewById(R.id.tv_address);
+            mtv_speciality = (TextView) view.findViewById(R.id.tv_speciality);
+            mid = (TextView) view.findViewById(R.id.id);
+            mtv_time =   (TextView) view.findViewById(R.id.tv_time);
+            mtv_doctor_id = (TextView) view.findViewById(R.id.tv_doctor_id);
+            mBookAppointment = (Button) view.findViewById(R.id.btn_book_appointment);
+            mrating_bar_doctor = (AppCompatRatingBar) view.findViewById(R.id.rating_bar_doctor);
+
         }
 
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
     }
 
     private void httpServiceCall() {

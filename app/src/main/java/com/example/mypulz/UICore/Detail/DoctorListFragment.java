@@ -13,8 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mypulz.R;
-import com.example.mypulz.UICore.Detail.dummy.DummyContent;
 import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
+
+import org.json.JSONObject;
 
 /**
  * A fragment representing a list of Items.
@@ -31,6 +32,7 @@ public class DoctorListFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     private OnListFragmentInteractionListener mListener;
+    JSONObject SearchDocterData = null;
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
@@ -75,7 +77,7 @@ public class DoctorListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyDoctorListRecyclerViewAdapter(DummyContent.ITEMS, mListener,getActivity()));
+            recyclerView.setAdapter(new MyDoctorListRecyclerViewAdapter(SearchDocterData, mListener,getActivity()));
         }
 
 

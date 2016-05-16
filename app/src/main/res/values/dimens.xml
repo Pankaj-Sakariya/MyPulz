@@ -10,6 +10,7 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
 
     <dimen name="padding1">15dp</dimen>
+    <dimen name="padding2">2dp</dimen>
     <dimen name="margin1">15dp</dimen>
 
     <dimen name="textsize1">10sp</dimen>
