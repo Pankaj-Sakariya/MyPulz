@@ -12,7 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -124,6 +126,24 @@ public class CommonFunction {
 
         }
         return arrayList;
+    }
+
+    public String changeDateFormat(String dateM, String inputFormatM, String outputForamtM) {
+        String inputPattern = inputFormatM;
+        String outputPattern = outputForamtM;
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(dateM);
+            str = outputFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return str;
     }
 
 

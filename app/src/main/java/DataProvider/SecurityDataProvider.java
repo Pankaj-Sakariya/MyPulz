@@ -2,6 +2,7 @@ package DataProvider;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -45,10 +46,10 @@ public class SecurityDataProvider {
         }
     }
 
-    public static void BookAppointment(Activity activity, String InputString, @NonNull HttpCallback callback) {
+    public static void BookAppointment(FragmentActivity activity, String InputString, @NonNull HttpCallback callback) {
         // Run callback callback.run();
         try {
-            HttpConnection.HttpConnect(activity,ServiceUrl.FindDoctor + "/?body=" + URLEncoder.encode(InputString,"UTF-8"),1000,"", Constant.MethodNameGet,callback);
+            HttpConnection.HttpConnect(activity,ServiceUrl.BookAppointment + "/?body=" + URLEncoder.encode(InputString,"UTF-8"),1000,"", Constant.MethodNameGet,callback);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

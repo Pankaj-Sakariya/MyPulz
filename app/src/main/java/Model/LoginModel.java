@@ -41,14 +41,17 @@ public class LoginModel {
         }
         return object.toString();
     }
-    public static String BookAppointmentGetModel(String first_name, String last_name, String mobile_number, String docterId,String date,String Time)
+    public static String BookAppointmentGetModel( String vendor_detail_id, String user_id,String customer_name,  String mobile_number,String reason_for_visit,String appointment_date,String time_slot_id)
     {
         JSONObject object = new JSONObject();
         try {
-            object.put("first_name",first_name);
-            object.put("last_name",last_name);
+            object.put("vendor_detail_id",vendor_detail_id);
+            object.put("user_id",user_id);
+            object.put("customer_name",customer_name);
             object.put("mobile_number",mobile_number);
-            object.put("docterId",docterId);
+            object.put("reason_for_visit",reason_for_visit);
+            object.put("appointment_date",appointment_date);
+            object.put("time_slot_id",time_slot_id);
         } catch (JSONException e) {
             e.printStackTrace();
         }
