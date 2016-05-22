@@ -11,13 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.mypulz.UICore.Detail.dummy.DummyContent;
-import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
 import com.example.mypulz.R;
+import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import Common.CommonFunction;
+import Common.Constant;
 import DataProvider.SecurityDataProvider;
 import Interface.HttpCallback;
 import Model.LoginModel;
@@ -36,7 +38,7 @@ public class MyAppointmentFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     AsyncTask HttpServiceCallMyAppointment = null;
-
+    RecyclerView recyclerView  = null;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -77,7 +79,8 @@ public class MyAppointmentFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyAppointmentRecyclerViewAdapter(DummyContent.ITEMS, mListener,getActivity()));
+            httpServiceCall(recyclerView);
+            HttpServiceCallMyAppointment.execute(null);
         }
         return view;
     }
@@ -100,34 +103,66 @@ public class MyAppointmentFragment extends Fragment {
         mListener = null;
     }
 
-    private void httpServiceCall() {
+    private void httpServiceCall(final RecyclerView recyclerView) {
         CommonFunction.showActivityIndicator(getActivity(),getResources().getString(R.string.title_for_activityIndicater));
-        HttpServiceCallMyAppointment = new AsyncTask() {
-            JSONObject response;
-            String myAppointmentGetModel = LoginModel.MyAppointmentGetModel("");
-            @Override
-            protected Object doInBackground(Object[] params) {
-                SecurityDataProvider.MyAppointment(getActivity(),myAppointmentGetModel, new HttpCallback() {
-                    @Override
-                    public void callbackFailure(Object result) {
-                        System.out.println(result);
+        try {
+            HttpServiceCallMyAppointment = new AsyncTask() {
+                JSONObject response;
+                final JSONArray finalJsonArray_customer_detail = new JSONArray(new CommonFunction().getSharedPreference(Constant.TAG_jArray_customer_detail, getActivity()));
+
+                String myAppointmentGetModel = LoginModel.MyAppointmentGetModel(new CommonFunction().parseStringFromJsonArray(finalJsonArray_customer_detail,"id"));
+                @Override
+                protected Object doInBackground(Object[] params) {
+                    SecurityDataProvider.MyAppointment(getActivity(),myAppointmentGetModel, new HttpCallback() {
+                        @Override
+                        public void callbackFailure(Object result) {
+                            System.out.println(result);
+                        }
+                        @Override
+                        public void callbackSuccess(Object result) {
+                            CommonFunction.HideActivityIndicator(getActivity());
+                            try {
+                                response = new JSONObject(result.toString());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    return null;
+                }
+                @Override
+                protected void onPostExecute(Object o) {
+
+                    super.onPostExecute(o);
+                    CommonFunction.HideActivityIndicator(getActivity());
+                    if(response != null)
+                    {
+                        if(response.optJSONArray("data").length() == 0)
+                        {
+                            new CommonFunction().showAlertDialog("Search Result Not Found.","Not Found",getActivity());
+                        }
+                        else
+                        {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    recyclerView.setAdapter(new MyAppointmentRecyclerViewAdapter(response, mListener,getActivity()));
+                                }
+
+                            });
+
+                        }
                     }
-                    @Override
-                    public void callbackSuccess(Object result) {
 
-                    }
-                });
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Object o) {
-
-                super.onPostExecute(o);
-                CommonFunction.HideActivityIndicator(getActivity());
-
-            }
-        };
+                }
+            };
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

@@ -69,7 +69,6 @@ public class LoginModel {
             e.printStackTrace();
         }
 
-
         return object.toString();
     }
 
@@ -77,10 +76,28 @@ public class LoginModel {
     {
         JSONObject object = new JSONObject();
         try {
-            object.put("userId",userId);
+            object.put("user_id",userId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return object.toString();
+    }
+
+    public static String ReviewDocterPostModel(String vendor_detail_id,String user_id,String customer_name,String mobile_number,String comment,String review_star,String is_publish)
+    {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("vendor_detail_id",vendor_detail_id);
+            object.put("user_id",user_id);
+            object.put("customer_name",customer_name);
+            object.put("mobile_number",mobile_number);
+            object.put("comment",comment);
+            object.put("review_star",review_star);
+            object.put("is_publish",is_publish);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return object.toString();
     }
 }

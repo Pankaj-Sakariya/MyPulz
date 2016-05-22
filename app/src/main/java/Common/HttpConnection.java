@@ -43,7 +43,7 @@ public class  HttpConnection  {
         String responseText = null;
         try {
 
-
+            System.out.println(InputString);
 //            // create HttpClient
 //            HttpClient httpclient = new DefaultHttpClient();
 //

@@ -1,6 +1,4 @@
 package com.example.mypulz.UICore.Detail;
-
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.AsyncTask;
@@ -38,9 +36,7 @@ import Common.CommonFunction;
 import Common.Constant;
 import DataProvider.SecurityDataProvider;
 import Interface.HttpCallback;
-import Model.FindDoctorModel;
 import Model.LoginModel;
-
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
@@ -224,8 +220,6 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
         Calendar c1 = Calendar.getInstance();
         c1.setTime(new Date()); // Now use today date.
         output = sdf.format(c1.getTime());
-
-
         DatePickerDialog dpd = new DatePickerDialog(mfragment,
                 new DatePickerDialog.OnDateSetListener() {
 
@@ -307,52 +301,39 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
             mtv_doctor_id = (TextView) view.findViewById(R.id.tv_doctor_id);
             mBookAppointment = (Button) view.findViewById(R.id.btn_book_appointment);
             mrating_bar_doctor = (AppCompatRatingBar) view.findViewById(R.id.rating_bar_doctor);
-
         }
 
     }
-
     private void httpServiceCall(final String mbookAppointmentGetModel, final Dialog dialog) {
         CommonFunction.showActivityIndicator(mfragment,mfragment.getResources().getString(R.string.title_for_activityIndicater));
-
         System.out.println("Here1");
         HttpServiceCallBookAppointment = new AsyncTask() {
             JSONObject response;
             String bookAppointmentGetModel = mbookAppointmentGetModel;
-
-
             @Override
             protected Object doInBackground(Object[] params) {
-
                 System.out.println("Here");
                 SecurityDataProvider.BookAppointment(mfragment,bookAppointmentGetModel, new HttpCallback() {
                     @Override
                     public void callbackFailure(Object result) {
                         System.out.println("!!!!pankaj_Failure"+result);
 //                        dialog.dismiss();
-
                     }
                     @Override
                     public void callbackSuccess(Object result) {
                         System.out.println("!!!!pankaj_Success"+result);
 //                        dialog.dismiss();
-
                         try {
                             response = new JSONObject(result.toString());
                             System.out.println("pankaj"+response);
-
                             //new CommonFunction().showAlertDialog(response.toString(),"Testing",getContext());
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 });
                 return null;
-
             }
-
             @Override
             protected void onPostExecute(Object o) {
 
@@ -388,11 +369,6 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
                    // dialog.dismiss();
                     Toast.makeText(dialog.getContext(),"Please try after some time, something went wrong..",Toast.LENGTH_LONG).show();
                 }
-
-
-
-
-
 
             }
         };

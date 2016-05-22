@@ -57,7 +57,7 @@ public class SecurityDataProvider {
     public static void MyAppointment(Activity activity, String InputString, @NonNull HttpCallback callback) {
         // Run callback callback.run();
         try {
-            HttpConnection.HttpConnect(activity,ServiceUrl.FindDoctor + "/?body=" + URLEncoder.encode(InputString,"UTF-8"),1000,"", Constant.MethodNameGet,callback);
+            HttpConnection.HttpConnect(activity,ServiceUrl.MyAppointment + "/?body=" + URLEncoder.encode(InputString,"UTF-8"),1000,"", Constant.MethodNameGet,callback);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

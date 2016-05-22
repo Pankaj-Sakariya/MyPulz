@@ -16,7 +16,8 @@ import com.example.mypulz.R;
 import com.example.mypulz.UICore.Detail.MyAppointmentFragment.OnListFragmentInteractionListener;
 import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
 
-import java.util.List;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -25,10 +26,10 @@ import java.util.List;
  */
 public class MyAppointmentRecyclerViewAdapter extends RecyclerView.Adapter<MyAppointmentRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final JSONObject  mValues;
     private final OnListFragmentInteractionListener mListener;
     private final FragmentActivity mfragment;
-    public MyAppointmentRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
+    public MyAppointmentRecyclerViewAdapter(JSONObject items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
         mValues = items;
         mListener = listener;
         mfragment = fragment;
@@ -43,9 +44,14 @@ public class MyAppointmentRecyclerViewAdapter extends RecyclerView.Adapter<MyApp
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        try{
+            holder.mtv_doctor_name.setText("Dr "+mValues.getJSONArray("data").getJSONObject(position).getString("vendor_name"));
+            holder.mtv_date.setText(mValues.getJSONArray("data").getJSONObject(position).getString("appointment_date"));
+            holder.mtv_time.setText(mValues.getJSONArray("data").getJSONObject(position).getString("time_slot"));
+            holder.mtv_speciality.setText(mValues.getJSONArray("data").getJSONObject(position).getString("reason_for_visit"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 //        holder.mRatting.addOnAttachStateChangeListener(new );
 
@@ -85,15 +91,20 @@ public class MyAppointmentRecyclerViewAdapter extends RecyclerView.Adapter<MyApp
             }
         });
     }
-
     @Override
     public int getItemCount() {
-        return mValues.size();
+        try {
+
+            return mValues.getJSONArray("data").length();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return  0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
+        public final TextView mtv_doctor_name,mtv_date,mtv_time,mtv_speciality;
         public final TextView mContentView;
         public DummyItem mItem;
         public Button mbtn_doctor_review;
@@ -102,7 +113,10 @@ public class MyAppointmentRecyclerViewAdapter extends RecyclerView.Adapter<MyApp
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
+            mtv_doctor_name = (TextView) view.findViewById(R.id.tv_doctor_name);
+            mtv_date = (TextView) view.findViewById(R.id.tv_date);
+            mtv_time = (TextView) view.findViewById(R.id.tv_time);
+            mtv_speciality = (TextView) view.findViewById(R.id.tv_speciality);
             mContentView = (TextView) view.findViewById(R.id.tv_time);
             mbtn_doctor_review = (Button) view.findViewById(R.id.btn_doctor_review);
             mRatting = (AppCompatRatingBar) view.findViewById(R.id.rating_bar_doctor);
