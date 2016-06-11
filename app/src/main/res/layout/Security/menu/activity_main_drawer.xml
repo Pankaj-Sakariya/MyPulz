@@ -6,10 +6,10 @@
             android:id="@+id/nav_find_doctor"
             android:icon="@drawable/ic_menu_camera"
             android:title="Find Doctor" />
-        <item
-            android:id="@+id/nav_book_appointment"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Book Appointment" />
+        <!--<item-->
+            <!--android:id="@+id/nav_book_appointment"-->
+            <!--android:icon="@drawable/ic_menu_camera"-->
+            <!--android:title="Book Appointment" />-->
         <item
             android:id="@+id/nav_my_appointment"
             android:icon="@drawable/ic_menu_camera"
@@ -18,10 +18,10 @@
             android:id="@+id/nav_my_profile"
             android:icon="@drawable/ic_menu_gallery"
             android:title="My Profile" />
-        <item
-            android:id="@+id/nav_review"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Review" />
+        <!--<item-->
+            <!--android:id="@+id/nav_review"-->
+            <!--android:icon="@drawable/ic_menu_slideshow"-->
+            <!--android:title="Review" />-->
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_manage"

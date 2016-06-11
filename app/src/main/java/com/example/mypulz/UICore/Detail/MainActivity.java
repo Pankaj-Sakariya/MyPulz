@@ -210,18 +210,18 @@ public class MainActivity extends AppCompatActivity
                 viewIsAtHome = false;
                 break;
 
-            case R.id.nav_review:
-                fragment = new ReviewDoctorFragment();
-                title = "Review";
-                viewIsAtHome = false;
-                break;
+//            case R.id.nav_review:
+//                fragment = new ReviewDoctorFragment();
+//                title = "Review";
+//                viewIsAtHome = false;
+//                break;
 
 
-            case R.id.nav_book_appointment:
-                fragment = new BookAppointmentFragment();
-                title = "Book Appointment";
-                viewIsAtHome = false;
-                break;
+//            case R.id.nav_book_appointment:
+//                fragment = new BookAppointmentFragment();
+//                title = "Book Appointment";
+//                viewIsAtHome = false;
+//                break;
 
             case R.id.nav_logout:
 

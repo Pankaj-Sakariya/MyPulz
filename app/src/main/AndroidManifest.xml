@@ -17,7 +17,7 @@
         <activity
             android:name=".UICore.Security.SplashActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,20 +27,20 @@
         <activity
             android:name=".UICore.Security.AnotherActivity"
             android:label="@string/title_activity_another"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".UICore.Security.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".UICore.Security.SignupActivity"
             android:label="@string/title_activity_signup"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".UICore.Detail.MainActivity"
             android:label="@string/title_activity_main"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
 
     </application>
 

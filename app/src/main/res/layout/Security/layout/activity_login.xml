@@ -19,6 +19,7 @@
             android:hint="Enter Mobile Number"
             android:background="@drawable/field_back"
             android:textColor="#000000"
+            android:inputType="number"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/cursor_colour"
             android:textSize="@dimen/textsize2"
