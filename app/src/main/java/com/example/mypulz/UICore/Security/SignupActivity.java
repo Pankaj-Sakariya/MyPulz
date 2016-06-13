@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -170,7 +171,10 @@ public class SignupActivity extends Activity {
                         if(response.has("message"))
                         {
                             String Message = response.getString("message");
-                            new CommonFunction().showAlertDialog(Message,"Response",activity);
+//                            new CommonFunction().showAlertDialog(Message,"Response",activity);
+//                            Snackbar.make(activity.getCurrentFocus(), Message, Snackbar.LENGTH_LONG)
+//                                    .setAction("Action", null).show();
+                            Toast.makeText(activity,Message,Toast.LENGTH_LONG).show();
                         }
                         Intent i = new Intent(SignupActivity.this,LoginActivity.class);
                         startActivity(i);
@@ -180,7 +184,10 @@ public class SignupActivity extends Activity {
                     {
                         if(response.has("message")) {
                             String Message = response.getString("message");
-                            new CommonFunction().showAlertDialog(Message,"Response",activity);
+//                            new CommonFunction().showAlertDialog(Message,"Error, Something went wrong",activity);
+//                            Snackbar.make(getCurrentFocus(), Message, Snackbar.LENGTH_LONG)
+//                                    .setAction("Action", null).show();
+                            Toast.makeText(activity,Message,Toast.LENGTH_LONG).show();
                         }
                     }
                 } catch (JSONException e) {

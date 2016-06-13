@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mypulz.R;
 import com.example.mypulz.UICore.Detail.MainActivity;
@@ -90,24 +91,26 @@ public class LoginActivity extends Activity {
         return  flag;
     }
     private void httpServiceCall() {
-        CommonFunction.showActivityIndicator(activity,getResources().getString(R.string.title_for_activityIndicater));
+        CommonFunction.showActivityIndicator(activity, getResources().getString(R.string.title_for_activityIndicater));
         HttpServiceCallLogin = new AsyncTask() {
             JSONObject response;
-            String loginPostModel = LoginModel.LoginPostModel(txtMobileNumber.getText().toString(),txtOtpPassword.getText().toString());
+            String loginPostModel = LoginModel.LoginPostModel(txtMobileNumber.getText().toString(), txtOtpPassword.getText().toString());
+
             @Override
             protected Object doInBackground(Object[] params) {
-                SecurityDataProvider.Login(activity,loginPostModel, new HttpCallback() {
+                SecurityDataProvider.Login(activity, loginPostModel, new HttpCallback() {
                     @Override
                     public void callbackFailure(Object result) {
                         System.out.println(result);
                     }
+
                     @Override
                     public void callbackSuccess(Object result) {
 
                         System.out.println(result);
                         try {
                             response = new JSONObject(result.toString());
-                            System.out.println("pankaj"+response);
+                            System.out.println("pankaj" + response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -119,14 +122,14 @@ public class LoginActivity extends Activity {
             @Override
             protected void onPostExecute(Object o) {
 
-                 super.onPostExecute(o);
+                super.onPostExecute(o);
                 CommonFunction.HideActivityIndicator(activity);
 
-                JSONArray jsonArray_customer_detail,jsonArray_category,jsonArray_vendor,jsonArray_area;
+                JSONArray jsonArray_customer_detail, jsonArray_category, jsonArray_vendor, jsonArray_area;
 
                 try {
-                    if(response.has("status")) {
-                        if (response.getInt("status") == 1 ) {
+                    if (response.has("status")) {
+                        if (response.getInt("status") == 1) {
                             if (response.has("message")) {
                                 String Message = response.getString("message");
 
@@ -146,13 +149,12 @@ public class LoginActivity extends Activity {
                                 finish();
                             }
 
-                        }
-                    }
-                    else if(response.has("status") && response.getString("status")=="0")
-                    {
-                        if(response.has("message")) {
-                            String Message = response.getString("message");
-                            new CommonFunction().showAlertDialog(Message,"Testing",activity);
+                        } else if (response.getInt("status") == 0) {
+                            if (response.has("message")) {
+                                String Message = response.getString("message");
+                                //                            new CommonFunction().showAlertDialog(Message,"Testing",activity);
+                                Toast.makeText(activity, Message, Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 } catch (JSONException e) {
@@ -161,8 +163,8 @@ public class LoginActivity extends Activity {
 
             }
         };
-    }
 
+    }
     @Override
     protected void onResume() {
         super.onResume();
