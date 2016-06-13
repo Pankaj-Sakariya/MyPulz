@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_find_doctor"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/find_doctor"
             android:title="Find Doctor" />
         <!--<item-->
             <!--android:id="@+id/nav_book_appointment"-->
@@ -12,11 +12,11 @@
             <!--android:title="Book Appointment" />-->
         <item
             android:id="@+id/nav_my_appointment"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/my_appointment"
             android:title="My Appointment" />
         <item
             android:id="@+id/nav_my_profile"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/my_profile_mdpi"
             android:title="My Profile" />
         <!--<item-->
             <!--android:id="@+id/nav_review"-->
@@ -24,7 +24,7 @@
             <!--android:title="Review" />-->
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/logout_mdpi"
             android:title="Logout" />
     </group>
 

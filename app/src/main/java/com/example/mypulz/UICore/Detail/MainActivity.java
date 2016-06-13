@@ -129,6 +129,15 @@ public class MainActivity extends AppCompatActivity
         } else {
             moveTaskToBack(true);  //If view is in News fragment, exit application
         }
+
+//        int count = getFragmentManager().getBackStackEntryCount();
+//
+//        if (count == 0) {
+//            super.onBackPressed();
+//            //additional code
+//        } else {
+//            getFragmentManager().popBackStack();
+//        }
     }
 
 //    @Override

@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import Common.CommonFunction;
+import Common.ConnectionDetector;
 import Common.Constant;
 import DataProvider.SecurityDataProvider;
 import Interface.HttpCallback;
@@ -65,11 +66,18 @@ public class LoginActivity extends Activity {
 
                 if(validation() == true)
                 {
-                    httpServiceCall();
-                    HttpServiceCallLogin.execute(null);
+                    if(new ConnectionDetector(activity).isConnectingToInternet() == true) {
+                        httpServiceCall();
+                        HttpServiceCallLogin.execute(null);
+                    }
+                    else
+                    {
+                        Toast.makeText(activity, "Something went wrong, either check you Internet connection or try after some time", Toast.LENGTH_LONG).show();
+                    }
                 }
-
             }
+
+
         });
     }
 

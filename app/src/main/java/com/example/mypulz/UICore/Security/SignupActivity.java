@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import Common.CommonFunction;
+import Common.ConnectionDetector;
 import DataProvider.SecurityDataProvider;
 import Interface.HttpCallback;
 import Model.LoginModel;
@@ -70,8 +71,15 @@ public class SignupActivity extends Activity {
 
 //                    Toast.makeText(SignupActivity.this,
 //                            radioSelectedType.getText().toString()+" is selected", Toast.LENGTH_SHORT).show();
-                    httpServiceCall();
-                    HttpServiceCallSignup.execute(null);
+                    if(new ConnectionDetector(activity).isConnectingToInternet() == true) {
+                        httpServiceCall();
+                        HttpServiceCallSignup.execute(null);
+                    }
+                    else
+                    {
+                        Toast.makeText(activity, "Something went wrong, either check you Internet connection or try after some time", Toast.LENGTH_LONG).show();
+                    }
+
                 }
 
             }

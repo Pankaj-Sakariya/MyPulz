@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -41,9 +42,10 @@ public class  HttpConnection  {
     public static void HttpConnect(Activity activity, String Url, int ConnectionTimeOut, String InputString, String Method, @NonNull HttpCallback callback)
     {
         String responseText = null;
-        try {
 
-            System.out.println(InputString);
+            try {
+
+                System.out.println(InputString);
 //            // create HttpClient
 //            HttpClient httpclient = new DefaultHttpClient();
 //
@@ -58,42 +60,39 @@ public class  HttpConnection  {
 //                result = convertInputStreamToString(inputStream);
 //            else
 //                result = "Did not work!";
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(Url);
-            //HttpPost httppostreq = new HttpPost(Url);
-            httpGet.setHeader("Accept", "application/json");
-            httpGet.setHeader("Content-type", "application/json");
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet(Url);
+                //HttpPost httppostreq = new HttpPost(Url);
+                httpGet.setHeader("Accept", "application/json");
+                httpGet.setHeader("Content-type", "application/json");
 //            if(Method == Constant.MethodNameGet) {
 //                httppostreq.setEntity(new StringEntity(InputString, "UTF-8"));
 //            }
 
-            HttpResponse httpresponse = httpclient.execute(httpGet);
-            StatusLine statusLine = httpresponse.getStatusLine();
-            if (statusLine.getStatusCode() == 200) {
-                try {
-                    responseText = EntityUtils.toString(httpresponse.getEntity(), "UTF-8");
-                    System.out.println("!!!!pankaj_responseText"+responseText);
-                    callback.callbackSuccess(responseText.substring(responseText.indexOf("{"), responseText.lastIndexOf("}") + 1));
-                } catch (NullPointerException np) {
-                    callback.callbackFailure(np);
+                HttpResponse httpresponse = httpclient.execute(httpGet);
+                StatusLine statusLine = httpresponse.getStatusLine();
+                if (statusLine.getStatusCode() == 200) {
+                    try {
+                        responseText = EntityUtils.toString(httpresponse.getEntity(), "UTF-8");
+                        System.out.println("!!!!pankaj_responseText" + responseText);
+                        callback.callbackSuccess(responseText.substring(responseText.indexOf("{"), responseText.lastIndexOf("}") + 1));
+                    } catch (NullPointerException np) {
+                        callback.callbackFailure(np);
+                    }
                 }
-            }
-        }
-        catch (ClientProtocolException e1)
-        {
-        // TODO Auto-generated catch block
-            e1.printStackTrace();
-            callback.callbackFailure(e1);
-        }
-        catch (IOException e1)
-        {
-        // TODO Auto-generated catch block
+            } catch (ClientProtocolException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+                callback.callbackFailure(e1);
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
 
-            e1.printStackTrace();
-            callback.callbackFailure(e1);
-        }
-        catch (NullPointerException np) {
-        }
+                e1.printStackTrace();
+                callback.callbackFailure(e1);
+            } catch (NullPointerException np) {
+            }
+
+
     }
 
 

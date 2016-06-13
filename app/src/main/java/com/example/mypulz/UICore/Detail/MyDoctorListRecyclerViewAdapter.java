@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,6 +100,15 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
                 final EditText edt_reason_for_visit=(EditText)dialog.findViewById(R.id.edt_reason_for_visit);
                 final EditText edt_datetime=(EditText)dialog.findViewById(R.id.edt_datetime);
                 final Spinner spinner_timeslot = (Spinner)dialog.findViewById(R.id.spinner_timeslot);
+
+                c = Calendar.getInstance();
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+
+
+                edt_datetime.setText(day+" "+(month+1)+" "+year);
+                edt_datetime.setText(new CommonFunction().changeDateFormat(edt_datetime.getText().toString(),"dd MM yyyy","dd MMM, yyyy"));
 
                 String str_customer_detail =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_customer_detail, mfragment);
                 JSONArray jsonArray_customer_detail = null;
@@ -210,10 +220,7 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
     public void setcalanderview(Dialog dialog,final EditText edt_datetime)
     {
         final String selected_date = "";
-        c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
+
         currDate = new java.sql.Date(System.currentTimeMillis());
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -281,7 +288,7 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
         public final TextView mtv_address;
         public final TextView mtv_speciality;
         public final TextView mtv_doctor_id;
-        public final TextView mid;
+        public final ImageView mid;
         public final TextView mtv_time;
         public final AppCompatRatingBar mrating_bar_doctor;
 
@@ -296,7 +303,7 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
             mtv_doctor_name = (TextView) view.findViewById(R.id.tv_doctor_name);
             mtv_address = (TextView) view.findViewById(R.id.tv_address);
             mtv_speciality = (TextView) view.findViewById(R.id.tv_speciality);
-            mid = (TextView) view.findViewById(R.id.id);
+            mid = (ImageView) view.findViewById(R.id.doctor_image);
             mtv_time =   (TextView) view.findViewById(R.id.tv_time);
             mtv_doctor_id = (TextView) view.findViewById(R.id.tv_doctor_id);
             mBookAppointment = (Button) view.findViewById(R.id.btn_book_appointment);
