@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.
- * <p>
+ * <p/>
  * TODO: Replace all uses of this class before publishing your app.
  */
 public class DummyContent {
@@ -17,6 +17,7 @@ public class DummyContent {
      * An array of sample (dummy) items.
      */
     public static final List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+
     /**
      * A map of sample (dummy) items, by ID.
      */

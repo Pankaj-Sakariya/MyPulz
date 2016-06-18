@@ -29,7 +29,7 @@ import Common.CommonFunction;
 import Common.Constant;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , DoctorListFragment.OnListFragmentInteractionListener, MyProfileFragment.OnFragmentInteractionListener,FindDoctorFragment.OnFragmentInteractionListener, ReviewDoctorFragment.OnFragmentInteractionListener , BookAppointmentFragment.OnFragmentInteractionListener, MyAppointmentFragment.OnListFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener , DoctorListFragment.OnListFragmentInteractionListener, MyProfileFragment.OnFragmentInteractionListener,FindDoctorFragment.OnFragmentInteractionListener, ReviewDoctorFragment.OnFragmentInteractionListener , BookAppointmentFragment.OnFragmentInteractionListener, MyAppointmentFragment.OnListFragmentInteractionListener, FindDoctorGridFragment.OnListFragmentInteractionListener{
     private boolean viewIsAtHome;
 
     TextView txt_full_name,txt_email_id;
@@ -201,12 +201,20 @@ public class MainActivity extends AppCompatActivity
 
         switch (viewId) {
 
+
             case R.id.nav_find_doctor:
-                fragment = new FindDoctorFragment();
+                fragment = new FindDoctorGridFragment();
                 title  = "Find Doctor";
                 viewIsAtHome = true;
 
                 break;
+
+//            case R.id.nav_find_doctor:
+//                fragment = new FindDoctorFragment();
+//                title  = "Find Doctor";
+//                viewIsAtHome = true;
+//
+//                break;
             case R.id.nav_my_appointment:
                 fragment = new MyAppointmentFragment();
                 title  = "My Appointment";

@@ -6,7 +6,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
+import com.example.mypulz.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -170,6 +175,19 @@ public class CommonFunction {
     }
 
 
+    public void changeFragment(Fragment newFragment, FragmentManager mFragmentManager)
+    {
+        // Create new transaction
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
 
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack
+        transaction.replace(R.id.content_frame, newFragment);
+        transaction.addToBackStack(null);
+        transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        // Commit the transaction
+        transaction.commit();
+
+    }
 
 }
