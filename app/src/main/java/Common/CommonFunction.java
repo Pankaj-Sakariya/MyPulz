@@ -175,10 +175,10 @@ public class CommonFunction {
     }
 
 
-    public void changeFragment(Fragment newFragment, FragmentManager mFragmentManager)
+    public void changeFragment(Fragment newFragment, FragmentTransaction mFragmentManager)
     {
         // Create new transaction
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        FragmentTransaction transaction = mFragmentManager;
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack

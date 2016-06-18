@@ -1,7 +1,7 @@
 package com.example.mypulz.UICore.TableViewCell;
 
-import android.app.Fragment;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -55,7 +55,8 @@ public class FindDoctorGridRA extends RecyclerView.Adapter<FindDoctorGridRA.View
             public void onClick(View view) {
 
                 FindDoctorFragment dFragment = new FindDoctorFragment();
-                new CommonFunction().changeFragment(dFragment,dFragment.getFragmentManager());
+                changeFragment(dFragment);
+//                new CommonFunction().changeFragment(dFragment,dFragment.getFragmentManager().beginTransaction());
             }
         });
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +70,24 @@ public class FindDoctorGridRA extends RecyclerView.Adapter<FindDoctorGridRA.View
             }
         });
     }
+
+      public void changeFragment(Fragment newFragment)
+    {
+        // Create new transaction
+
+        android.support.v4.app.FragmentTransaction transaction;
+        transaction = mFragment.getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack
+        transaction.replace(R.id.content_frame, newFragment);
+        transaction.addToBackStack(null);
+        transaction.setTransitionStyle(android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        // Commit the transaction
+        transaction.commit();
+
+    }
+
     @Override
     public int getItemCount() {
         return mValues.size();
