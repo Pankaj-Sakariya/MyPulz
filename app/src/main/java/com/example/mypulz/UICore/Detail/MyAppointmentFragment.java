@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mypulz.R;
-import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -175,6 +174,6 @@ public class MyAppointmentFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+
     }
 }

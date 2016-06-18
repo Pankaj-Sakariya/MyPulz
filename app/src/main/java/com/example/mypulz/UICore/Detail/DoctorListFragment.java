@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mypulz.R;
-import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
+
 
 import org.json.JSONObject;
 
@@ -138,6 +138,6 @@ public class DoctorListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+
     }
 }

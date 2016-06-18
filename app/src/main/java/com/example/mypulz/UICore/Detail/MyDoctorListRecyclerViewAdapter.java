@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.example.mypulz.R;
 import com.example.mypulz.UICore.Detail.DoctorListFragment.OnListFragmentInteractionListener;
-import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
