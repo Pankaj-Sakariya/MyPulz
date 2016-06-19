@@ -1,4 +1,4 @@
-package com.example.mypulz.UICore.Detail;
+package com.example.mypulz.UICore.TableViewCell;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.AsyncTask;
