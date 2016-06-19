@@ -25,12 +25,12 @@ import org.json.JSONObject;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyAppointmentRecyclerViewAdapter extends RecyclerView.Adapter<MyAppointmentRecyclerViewAdapter.ViewHolder>   {
+public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder>   {
 
     private final JSONObject  mValues;
     private final OnListFragmentInteractionListener mListener;
     private final FragmentActivity mfragment;
-    public MyAppointmentRecyclerViewAdapter(JSONObject items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
+    public AppointmentRA(JSONObject items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
         mValues = items;
         mListener = listener;
         mfragment = fragment;

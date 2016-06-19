@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mypulz.R;
-import com.example.mypulz.UICore.TableViewCell.MyAppointmentRecyclerViewAdapter;
+import com.example.mypulz.UICore.TableViewCell.AppointmentRA;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -146,7 +146,7 @@ public class MyAppointmentFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    recyclerView.setAdapter(new MyAppointmentRecyclerViewAdapter(response, mListener,getActivity()));
+                                    recyclerView.setAdapter(new AppointmentRA(response, mListener,getActivity()));
                                 }
 
                             });
@@ -175,6 +175,5 @@ public class MyAppointmentFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-
     }
 }

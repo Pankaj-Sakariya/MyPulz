@@ -39,11 +39,11 @@ import DataProvider.SecurityDataProvider;
 import Interface.HttpCallback;
 import Model.LoginModel;
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a  and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoctorListRecyclerViewAdapter.ViewHolder> {
+public class DoctorListRA extends RecyclerView.Adapter<DoctorListRA.ViewHolder> {
 
     private final JSONObject mValues;
     private final OnListFragmentInteractionListener mListener;
@@ -56,7 +56,7 @@ public class MyDoctorListRecyclerViewAdapter extends RecyclerView.Adapter<MyDoct
     int year, month, day;
     java.sql.Date currDate;
     String output;
-    public MyDoctorListRecyclerViewAdapter(JSONObject items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
+    public DoctorListRA(JSONObject items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
         mValues = items;
         mListener = listener;
         mfragment = fragment;

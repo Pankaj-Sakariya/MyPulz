@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mypulz.R;
-import com.example.mypulz.UICore.TableViewCell.MyDoctorListRecyclerViewAdapter;
+import com.example.mypulz.UICore.TableViewCell.DoctorListRA;
 
 
 import org.json.JSONObject;
@@ -78,7 +78,7 @@ public class DoctorListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyDoctorListRecyclerViewAdapter(SearchDocterData, mListener,getActivity()));
+            recyclerView.setAdapter(new DoctorListRA(SearchDocterData, mListener,getActivity()));
         }
 
 
