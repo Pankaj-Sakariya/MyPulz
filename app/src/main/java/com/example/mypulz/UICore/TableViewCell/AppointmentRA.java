@@ -1,6 +1,7 @@
 package com.example.mypulz.UICore.TableViewCell;
 
 import android.app.Dialog;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,11 @@ import com.hedgehog.ratingbar.RatingBar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import Common.CommonFunction;
+import DataProvider.SecurityDataProvider;
+import Interface.HttpCallback;
+import Model.LoginModel;
+
 /**
  * {@link RecyclerView.Adapter} that can display a  and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
@@ -30,6 +36,7 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
     private final JSONObject  mValues;
     private final OnListFragmentInteractionListener mListener;
     private final FragmentActivity mfragment;
+    AsyncTask HttpServiceCallGetReview = null;
     public AppointmentRA(JSONObject items, OnListFragmentInteractionListener listener, FragmentActivity fragment) {
         mValues = items;
         mListener = listener;
@@ -60,6 +67,7 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
             @Override
             public void onClick(View v) {
 
+
                 final Dialog dialog = new Dialog(mfragment);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
                 dialog.setContentView(R.layout.dilog_review_docter);
@@ -70,15 +78,6 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
                 EditText edt_comment=(EditText)dialog.findViewById(R.id.edt_comment);
                 RatingBar rating_bar_doctor =(RatingBar)dialog.findViewById(R.id.rating_bar_doctor);
                 rating_bar_doctor.setClickable(true);
-//                rating_bar_doctor.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
-//                    @Override
-//                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//                        String totalStars = "Total Stars::asd " + rating_bar_doctor.getNumStars();
-//                        String ratinga = "Rating ::asd " + rating_bar_doctor.getRating();
-//                        Toast.makeText(mfragment.getApplicationContext(), totalStars + "\n" + rating, Toast.LENGTH_LONG).show();
-//
-//                    }
-//                });
 
                 rating_bar_doctor.setOnRatingChangeListener(
                         new RatingBar.OnRatingChangeListener() {
@@ -94,41 +93,13 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
                 rating_bar_doctor.setStarEmptyDrawable(mfragment.getResources().getDrawable(R.mipmap.ic_love_empty));
                 rating_bar_doctor.setStarFillDrawable(mfragment.getResources().getDrawable(R.mipmap.ic_love_fill));
 
-//                rating_bar_doctor.setOnRatingBarChangeListener(new AppCompatRatingBar.OnRatingBarChangeListener() {
-//                    @Override
-//                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-//                        String totalStars = "Total Stars:: " + rating_bar_doctor.getNumStars();
-//                        String ratinga = "Rating :: " + rating_bar_doctor.getRating();
-//                        Toast.makeText(mfragment.getApplicationContext(), totalStars + "\n" + rating, Toast.LENGTH_LONG).show();
-//                    }
-//
-//                });
-//                rating_bar_doctor.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        if (event.getAction() == MotionEvent.ACTION_UP) {
-//                            // TODO perform your action here
-//                            String totalStars = "Total Stars ACTION_DOWN:: " + rating_bar_doctor.getNumStars();
-//                            String ratinga1 = "Rating ACTION_DOWN:: " + rating_bar_doctor.getRating();
-//                            Toast.makeText(mfragment.getApplicationContext(), totalStars + "\n" + ratinga1, Toast.LENGTH_LONG).show();
-//                        }
-//                        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                            // TODO perform your action here
-//                            String totalStars = "Total Stars ACTION_DOWN:: " + rating_bar_doctor.getNumStars();
-//                            String ratinga1 = "Rating ACTION_DOWN:: " + rating_bar_doctor.getRating();
-////                            rating_bar_doctor.setRating((rating_bar_doctor.getRating()));
-//                            rating_bar_doctor.setRating((5));
-//                            Toast.makeText(mfragment.getApplicationContext(), totalStars + "\n" + ratinga1, Toast.LENGTH_LONG).show();
-//                        }
-//                        return true;
-//                    }
-//                });
-
                 // if button is clicked, close the custom dialog
                 btn_register.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        httpServiceCall();
+                        HttpServiceCallGetReview.execute(null);
                     }
                 });
 
@@ -148,7 +119,57 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
         return  0;
     }
 
+    private void httpServiceCall() {
+        CommonFunction.showActivityIndicator(mfragment, mfragment.getResources().getString(R.string.title_for_activityIndicater));
+        HttpServiceCallGetReview = new AsyncTask() {
+            JSONObject response;
+            String loginPostModel = LoginModel.LoginPostModel("", "");
 
+            @Override
+            protected Object doInBackground(Object[] params) {
+                SecurityDataProvider.Login(mfragment, loginPostModel, new HttpCallback() {
+                    @Override
+                    public void callbackFailure(Object result) {
+                        System.out.println(result);
+                    }
+                    @Override
+                    public void callbackSuccess(Object result) {
+                        System.out.println(result);
+                        try {
+                            response = new JSONObject(result.toString());
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                CommonFunction.HideActivityIndicator(mfragment);
+                try {
+                    if (response.has("status")) {
+                        if (response.getInt("status") == 1) {
+                            if (response.has("message")) {
+                                String Message = response.getString("message");
+
+                            }
+                        } else if (response.getInt("status") == 0) {
+                            if (response.has("message")) {
+                                String Message = response.getString("message");
+                                // new CommonFunction().showAlertDialog(Message,"Testing",activity);
+                                Toast.makeText(mfragment, Message, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
     public class ViewHolder extends RecyclerView.ViewHolder    {
         public final View mView;
         public final TextView mtv_doctor_name,mtv_date,mtv_time,mtv_speciality;
