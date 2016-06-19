@@ -14,27 +14,11 @@
         android:layout_height="match_parent"
        >
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:text="@string/hello_blank_fragment"-->
-                <!--android:padding="10dp"/>-->
-
-            <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="#8C000000"-->
-            <!--android:gravity="center"-->
-            <!--android:padding="10dp"-->
-            <!--android:text="Find Doctor"-->
-            <!--android:textColor="#FFFFFF"-->
-            <!--android:textSize="@dimen/textsize2"/>-->
 
             <Spinner
                 android:id="@+id/spinner_activity"
@@ -42,75 +26,48 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/spinner_bg"
                 android:layout_marginTop="10dp"
-
+                android:visibility="gone"
                 android:spinnerMode="dropdown"
               />
-
-
-            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            <TextView
+                android:id="@+id/text_deices_name"
+                style="@android:style/TextAppearance.Holo.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                float:fletPadding="5dp">
+                android:layout_marginTop="10dp"
+                android:background="@drawable/field_back"
+                android:textCursorDrawable="@drawable/cursor_colour"
+                android:hint="Deices Name"
+                android:padding="@dimen/padding1"
+                android:singleLine="true"
+                android:textColor="#000000"
+                />
 
-                <AutoCompleteTextView
-                    android:id="@+id/txt_area_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/field_back"
-                    android:textCursorDrawable="@drawable/cursor_colour"
-                    android:hint="Choose Location"
-                    android:drawableRight="@drawable/ic_menu_send"
-                    android:padding="@dimen/padding1"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-
-                    android:textSize="@dimen/textsize2" />
-            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-
-
-
-            <!--<com.wrapp.floatlabelededittext.FloatLabeledEditText-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
-
-            <!--<EditText-->
-            <!--android:id="@+id/edt_village_name1"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="10dp"-->
-
-            <!--android:hint="Enter Village Name"-->
-            <!--/>-->
-            <!--</com.wrapp.floatlabelededittext.FloatLabeledEditText>-->
-
-
-
-
-
-
-            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+            <Spinner
+                android:id="@+id/spinner_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                float:fletPadding="5dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:spinnerMode="dropdown"
+                />
 
-
-                <AutoCompleteTextView
-                    android:id="@+id/txt_vendor_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/field_back"
-                    android:textCursorDrawable="@drawable/cursor_colour"
-                    android:hint="Enter Name of Doctor"
-                    android:drawableRight="@drawable/ic_menu_send"
-                    android:padding="@dimen/padding1"
-                    android:singleLine="true"
-                    android:textColor="#000000"
-                    android:textSize="@dimen/textsize2" />
-
-            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
-
+            <Spinner
+                android:id="@+id/spinner_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:spinnerMode="dropdown"
+                />
+            <Spinner
+                android:id="@+id/spinner_docter_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:spinnerMode="dropdown"
+                />
 
             <Button
                 android:layout_width="match_parent"

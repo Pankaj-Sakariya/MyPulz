@@ -3,12 +3,10 @@ package DataProvider;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import Common.ConnectionDetector;
 import Common.Constant;
 import Common.HttpConnection;
 import Common.ServiceUrl;
@@ -62,6 +60,14 @@ public class SecurityDataProvider {
         // Run callback callback.run();
         try {
             HttpConnection.HttpConnect(activity,ServiceUrl.MyAppointment + "/?body=" + URLEncoder.encode(InputString,"UTF-8"),1000,"", Constant.MethodNameGet,callback);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void SubmitReview(Activity activity, String InputString, @NonNull HttpCallback callback) {
+        // Run callback callback.run();
+        try {
+            HttpConnection.HttpConnect(activity,ServiceUrl.SubmitReview + "/?body=" + URLEncoder.encode(InputString,"UTF-8"),1000,"", Constant.MethodNameGet,callback);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

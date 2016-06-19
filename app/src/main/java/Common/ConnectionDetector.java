@@ -27,7 +27,6 @@ public class ConnectionDetector extends BroadcastReceiver{
 						return true;
 					}
 			}
-
 		}
 		return false;
 	}

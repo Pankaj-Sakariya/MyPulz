@@ -17,4 +17,6 @@ public class ServiceUrl {
     public static String FindDoctor = ServerPath + "find-doctor";
     public static String BookAppointment = ServerPath + "book-appointment";
     public static String MyAppointment = ServerPath + "my-appointment";
+    public static String SubmitReview = ServerPath + "submit-review";
+
 }

@@ -119,11 +119,11 @@ public class FindDoctorFragment extends Fragment {
 
     private void initializeWidget(View view) {
 
-        btn_search = (Button)view.findViewById(R.id.btn_search);
-        spinner_activity = (Spinner)view.findViewById(R.id.spinner_activity);
-        txt_area_name = (AutoCompleteTextView)view.findViewById(R.id.txt_area_name);
-        txt_vendor_name = (AutoCompleteTextView)view.findViewById(R.id.txt_vendor_name);
-        setData();
+//        btn_search = (Button)view.findViewById(R.id.btn_search);
+//        spinner_activity = (Spinner)view.findViewById(R.id.spinner_activity);
+//        txt_area_name = (AutoCompleteTextView)view.findViewById(R.id.txt_area_name);
+//        txt_vendor_name = (AutoCompleteTextView)view.findViewById(R.id.txt_vendor_name);
+//        setData();
 
     }
 
@@ -219,50 +219,6 @@ public class FindDoctorFragment extends Fragment {
                 });
                 return null;
             }
-
-//            @Override
-//            protected void onPostExecute(Object o) {
-//                super.onPostExecute(o);
-//
-//
-//                JSONArray jsonArray_customer_detail,jsonArray_category,jsonArray_vendor,jsonArray_area;
-//
-//                try {
-//                    if(response.has("status")) {
-//                        if (response.getString("status") == "1") {
-//                            if (response.has("message")) {
-//                                String Message = response.getString("message");
-//
-//                                /** Parse Json Array Using Common Function**/
-//                                jsonArray_customer_detail = new CommonFunction().parseJsonArray(Constant.TAG_jArray_customer_detail, response);
-//                                jsonArray_category = new CommonFunction().parseJsonArray(Constant.TAG_jArray_category, response);
-//                                jsonArray_vendor = new CommonFunction().parseJsonArray(Constant.TAG_jArray_vendor, response);
-//                                jsonArray_area = new CommonFunction().parseJsonArray(Constant.TAG_jArray_area, response);
-//
-//                                /** Save array in preference as string Using Common Function**/
-//                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_customer_detail, jsonArray_customer_detail.toString(), activity);
-//                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_category, jsonArray_category.toString(), activity);
-//                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_vendor, jsonArray_vendor.toString(), activity);
-//                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_area, jsonArray_area.toString(), activity);
-//                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-//                                startActivity(i);
-//                                finish();
-//                            }
-//
-//                        }
-//                    }
-//                    else if(response.has("status") && response.getString("status")=="0")
-//                    {
-//                        if(response.has("message")) {
-//                            String Message = response.getString("message");
-//                            new CommonFunction().showAlertDialog(Message,"Testing",activity);
-//                        }
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
         };
     }
 

@@ -29,12 +29,10 @@ public class DoctorListFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     Fragment fragment = null;
-
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     private OnListFragmentInteractionListener mListener;
     JSONObject SearchDocterData = null;
-
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static DoctorListFragment newInstance(int columnCount) {
@@ -44,7 +42,6 @@ public class DoctorListFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -52,7 +49,6 @@ public class DoctorListFragment extends Fragment {
     public DoctorListFragment() {
 
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,14 +57,11 @@ public class DoctorListFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_doctorlist_list, container, false);
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -80,17 +73,12 @@ public class DoctorListFragment extends Fragment {
             }
             recyclerView.setAdapter(new DoctorListRA(SearchDocterData, mListener,getActivity()));
         }
-
-
         return view;
     }
-
-
     public void changeFragment(Fragment newFragment)
     {
         // Create new transaction
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack
         transaction.replace(R.id.content_frame, newFragment);
@@ -98,16 +86,11 @@ public class DoctorListFragment extends Fragment {
         transaction.setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         // Commit the transaction
         transaction.commit();
-
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
     }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -118,15 +101,11 @@ public class DoctorListFragment extends Fragment {
                     + " must implement OnListFragmentInteractionListener");
         }
     }
-
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
-
-
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -139,6 +118,5 @@ public class DoctorListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-
     }
 }

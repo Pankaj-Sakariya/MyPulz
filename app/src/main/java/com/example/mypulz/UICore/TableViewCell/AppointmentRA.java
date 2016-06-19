@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +52,7 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         try{
             holder.mtv_doctor_name.setText("Dr "+mValues.getJSONArray("data").getJSONObject(position).getString("vendor_name"));
             holder.mtv_date.setText(mValues.getJSONArray("data").getJSONObject(position).getString("appointment_date"));
@@ -60,25 +61,21 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-//        holder.mRatting.addOnAttachStateChangeListener(new );
-
         holder.mbtn_doctor_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                System.out.println(holder.getPosition());
+                final int currentPozition = (holder.getPosition());
                 final Dialog dialog = new Dialog(mfragment);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
                 dialog.setContentView(R.layout.dilog_review_docter);
-
                 // set the custom dialog components - text, image and button
-
                 Button btn_register = (Button) dialog.findViewById(R.id.btn_register);
-                EditText edt_comment=(EditText)dialog.findViewById(R.id.edt_comment);
+                final EditText edt_comment=(EditText)dialog.findViewById(R.id.edt_comment);
                 RatingBar rating_bar_doctor =(RatingBar)dialog.findViewById(R.id.rating_bar_doctor);
-                rating_bar_doctor.setClickable(true);
+                final RadioGroup mradioUserType  = (RadioGroup) dialog.findViewById(R.id.radioUserType);
 
+                rating_bar_doctor.setClickable(true);
                 rating_bar_doctor.setOnRatingChangeListener(
                         new RatingBar.OnRatingChangeListener() {
                             @Override
@@ -92,13 +89,21 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
                 rating_bar_doctor.setStarImageSize(16f);
                 rating_bar_doctor.setStarEmptyDrawable(mfragment.getResources().getDrawable(R.mipmap.ic_love_empty));
                 rating_bar_doctor.setStarFillDrawable(mfragment.getResources().getDrawable(R.mipmap.ic_love_fill));
-
                 // if button is clicked, close the custom dialog
                 btn_register.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        httpServiceCall();
+                        int selectedId = mradioUserType.getCheckedRadioButtonId();
+                        String vendor_detail_id = null;
+                        String user_id = null;
+                        try {
+                            vendor_detail_id = mValues.getJSONArray("data").getJSONObject(currentPozition).getString("vendor_detail_id");
+                            user_id = mValues.getJSONArray("data").getJSONObject(currentPozition).getString("user_id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        httpServiceCall(holder.mRatting.getRating(),edt_comment.getText().toString(),selectedId,vendor_detail_id,user_id,currentPozition);
                         HttpServiceCallGetReview.execute(null);
                     }
                 });
@@ -119,15 +124,14 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
         return  0;
     }
 
-    private void httpServiceCall() {
+    private void httpServiceCall(final float rating, final String Comment, final int SelectedRadiobutton, final String vendor_detail_id , final String user_id,int Pozition) {
         CommonFunction.showActivityIndicator(mfragment, mfragment.getResources().getString(R.string.title_for_activityIndicater));
         HttpServiceCallGetReview = new AsyncTask() {
             JSONObject response;
-            String loginPostModel = LoginModel.LoginPostModel("", "");
-
+            String ReviewDocterPostModel = LoginModel.ReviewDocterPostModel(vendor_detail_id,user_id,Comment,String.valueOf(rating),String.valueOf(SelectedRadiobutton));
             @Override
             protected Object doInBackground(Object[] params) {
-                SecurityDataProvider.Login(mfragment, loginPostModel, new HttpCallback() {
+                SecurityDataProvider.SubmitReview(mfragment, ReviewDocterPostModel, new HttpCallback() {
                     @Override
                     public void callbackFailure(Object result) {
                         System.out.println(result);
@@ -188,6 +192,7 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
             mContentView = (TextView) view.findViewById(R.id.tv_time);
             mbtn_doctor_review = (Button) view.findViewById(R.id.btn_doctor_review);
             mRatting = (AppCompatRatingBar) view.findViewById(R.id.rating_bar_doctor);
+
         }
 
 
