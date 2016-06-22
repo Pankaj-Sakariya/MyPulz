@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class LoginActivity extends Activity {
     Activity activity = null;
     Button btnlogin,btnsignup;
     TextView txtOtpPassword,txtMobileNumber;
+    CheckBox chk_remember_me;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +47,34 @@ public class LoginActivity extends Activity {
         btnsignup = (Button)findViewById(R.id.btnsignup);
         txtOtpPassword = (TextView)findViewById(R.id.txtOtpPassword);
         txtMobileNumber = (TextView)findViewById(R.id.txtMobileNumber);
+        chk_remember_me = (CheckBox)findViewById(R.id.chk_remember_me);
 
-        txtOtpPassword.setText("12345");
-        txtMobileNumber.setText("1234567890");
+
+
+//        txtOtpPassword.setText("12345");
+//        txtMobileNumber.setText("1234567890");
 
     }
     private void setData() {
+
+        Intent i = getIntent();
+        String str_mobile_number = i.getStringExtra(Constant.TAG_mobile_number);
+        txtMobileNumber.setText(str_mobile_number);
+
+        Toast.makeText(LoginActivity.this,"Your OTP is : 12345",Toast.LENGTH_LONG).show();
+
+        txtOtpPassword.setText("12345");
+
+        String chk_remember_me_value =  new CommonFunction().getSharedPreference("chk_remember_me",activity);
+        if(chk_remember_me_value.equalsIgnoreCase("1"))
+        {
+            chk_remember_me.setChecked(true);
+//            txtMobileNumber.setText(new CommonFunction().getSharedPreference("username",activity));
+        }
+        else if (chk_remember_me_value.equalsIgnoreCase("0"))
+        {
+            chk_remember_me.setChecked(false);
+        }
 
         btnsignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +90,17 @@ public class LoginActivity extends Activity {
 
                 if(validation() == true)
                 {
+
                     if(new ConnectionDetector(activity).isConnectingToInternet() == true) {
+                        if(chk_remember_me.isChecked())
+                        {
+                            new CommonFunction().saveSharedPreference("chk_remember_me","1",activity);
+                            new CommonFunction().saveSharedPreference("username",txtMobileNumber.getText().toString(),activity);
+                        }
+                        else
+                        {
+                            new CommonFunction().saveSharedPreference("chk_remember_me","0",activity);
+                        }
                         httpServiceCall();
                         HttpServiceCallLogin.execute(null);
                     }
@@ -81,6 +115,7 @@ public class LoginActivity extends Activity {
         });
     }
 
+
     private boolean validation()
     {
         boolean flag = true;
@@ -88,6 +123,12 @@ public class LoginActivity extends Activity {
         {
             flag = false;
             txtMobileNumber.setError("Please Enter Mobile Number");
+            txtMobileNumber.setFocusable(true);
+        }
+        if(txtMobileNumber.getText().length() > 10)
+        {
+            flag = false;
+            txtMobileNumber.setError("Please Enter Valid Mobile Number");
             txtMobileNumber.setFocusable(true);
         }
         else if(txtOtpPassword.getText().length() == 0)
@@ -152,6 +193,9 @@ public class LoginActivity extends Activity {
                                 new CommonFunction().saveSharedPreference(Constant.TAG_jArray_category, jsonArray_category.toString(), activity);
                                 new CommonFunction().saveSharedPreference(Constant.TAG_jArray_vendor, jsonArray_vendor.toString(), activity);
                                 new CommonFunction().saveSharedPreference(Constant.TAG_jArray_area, jsonArray_area.toString(), activity);
+
+                                new CommonFunction().saveSharedPreference(Constant.TAG_login_verified, "1", activity);
+
                                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(i);
                                 finish();
@@ -162,6 +206,7 @@ public class LoginActivity extends Activity {
                                 String Message = response.getString("message");
                                 //                            new CommonFunction().showAlertDialog(Message,"Testing",activity);
                                 Toast.makeText(activity, Message, Toast.LENGTH_LONG).show();
+                                new CommonFunction().saveSharedPreference(Constant.TAG_login_verified, "0", activity);
                             }
                         }
                     }
@@ -176,6 +221,11 @@ public class LoginActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
 

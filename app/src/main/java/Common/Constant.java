@@ -24,4 +24,7 @@ public class Constant {
     public static String TAG_jArray_vendor = "vendor";
     public static String TAG_jArray_area = "area";
 
+    public static String TAG_login_verified = "0";
+    public static String TAG_mobile_number = "";
+
 }

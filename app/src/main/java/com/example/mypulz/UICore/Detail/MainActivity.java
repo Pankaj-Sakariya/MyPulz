@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.mypulz.R;
 import com.example.mypulz.UICore.Detail.dummy.DummyContent;
 import com.example.mypulz.UICore.Security.LoginActivity;
+import com.example.mypulz.UICore.Security.OtpActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -242,7 +243,8 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_logout:
 
-                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                new CommonFunction().saveSharedPreference(Constant.TAG_login_verified, "0", activity);
+                Intent i = new Intent(MainActivity.this, OtpActivity.class);
                 startActivity(i);
                 finish();
 //                fragment = new DoctorListFragment();

@@ -9,6 +9,10 @@ import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.example.mypulz.R;
+import com.example.mypulz.UICore.Detail.MainActivity;
+
+import Common.CommonFunction;
+import Common.Constant;
 
 
 public class SplashActivity extends Activity {
@@ -49,9 +53,27 @@ public class SplashActivity extends Activity {
                 catch (Exception e) {
                 } finally {
                     internet_flag = true;
-                    Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(i);
-                    finish();
+                    if(new CommonFunction().getSharedPreference(Constant.TAG_login_verified,activity).equalsIgnoreCase("0"))
+                    {
+                        Intent i = new Intent(SplashActivity.this, OtpActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                    else if(new CommonFunction().getSharedPreference(Constant.TAG_login_verified,activity).equalsIgnoreCase("1"))
+                    {
+                        Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                    else
+                    {
+                        Intent i = new Intent(SplashActivity.this, OtpActivity.class);
+                        startActivity(i);
+                        finish();
+
+                    }
+
+
                 }
             }
         };
