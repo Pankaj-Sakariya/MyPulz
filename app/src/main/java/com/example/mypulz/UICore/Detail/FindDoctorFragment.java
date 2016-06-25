@@ -50,20 +50,25 @@ public class FindDoctorFragment extends Fragment {
 
     JSONArray jsonArray_category = null;
     JSONArray jsonArray_area = null;
+    JSONArray jsonArray_city = null;
     JSONArray jsonArray_vendor = null;
 
     Spinner spinner_activity;
-    AutoCompleteTextView txt_area_name,txt_vendor_name;
+    AutoCompleteTextView txt_city_name,txt_area_name,txt_vendor_name;
 
     ArrayList<String> arrayList_category_data;
+    ArrayList<String> arrayList_city_data;
     ArrayList<String> arrayList_area_data;
     ArrayList<String> arrayList_vendor_data;
 
     ArrayAdapter<String> spinner_activity_adapter;
+    ArrayAdapter<String> txt_city_adapter;
     ArrayAdapter<String> txt_area_adapter;
     ArrayAdapter<String> txt_vendor_adapter;
 
     AsyncTask HttpServiceCallFindDoctor = null;
+
+    int position;
 
     Button btn_search;
 
@@ -97,6 +102,8 @@ public class FindDoctorFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            position = getArguments().getInt("position");
+
         }
 
 
@@ -119,11 +126,12 @@ public class FindDoctorFragment extends Fragment {
 
     private void initializeWidget(View view) {
 
-//        btn_search = (Button)view.findViewById(R.id.btn_search);
-//        spinner_activity = (Spinner)view.findViewById(R.id.spinner_activity);
-//        txt_area_name = (AutoCompleteTextView)view.findViewById(R.id.txt_area_name);
-//        txt_vendor_name = (AutoCompleteTextView)view.findViewById(R.id.txt_vendor_name);
-//        setData();
+        btn_search = (Button)view.findViewById(R.id.btn_search);
+        spinner_activity = (Spinner)view.findViewById(R.id.spinner_activity);
+        txt_city_name = (AutoCompleteTextView)view.findViewById(R.id.txt_city_name);
+        txt_area_name = (AutoCompleteTextView)view.findViewById(R.id.txt_area_name);
+        txt_vendor_name = (AutoCompleteTextView)view.findViewById(R.id.txt_vendor_name);
+        setData();
 
     }
 
@@ -131,22 +139,29 @@ public class FindDoctorFragment extends Fragment {
 
 
         String str_category_data =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_category, getContext());
+        String str_city_data =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_city, getContext());
         String str_area_data =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_area, getContext());
         String str_vendor_data =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_vendor, getContext());
 //       new CommonFunction().showAlertDialog(data,"Response",getContext());
 
         try {
             jsonArray_category = new JSONArray(str_category_data);
+            jsonArray_city = new JSONArray(str_city_data);
             jsonArray_area = new JSONArray(str_area_data);
             jsonArray_vendor = new JSONArray(str_vendor_data);
 
             arrayList_category_data = new CommonFunction().parseJsonArrayToMap(jsonArray_category,"category_name");
+            arrayList_city_data = new CommonFunction().parseJsonArrayToMap(jsonArray_city,"city_name");
             arrayList_area_data = new CommonFunction().parseJsonArrayToMap(jsonArray_area,"area_name");
             arrayList_vendor_data = new CommonFunction().parseJsonArrayToMap(jsonArray_vendor,"full_name");
 //            new CommonFunction().showAlertDialog(arrayList_vendor_data.toString(),"Response",getContext());
 
             spinner_activity_adapter = new ArrayAdapter<String>(getContext(), android.R.layout.select_dialog_item, arrayList_category_data);
             spinner_activity.setAdapter(spinner_activity_adapter);
+            spinner_activity.setSelection(position);
+
+            txt_city_adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, arrayList_city_data);
+            txt_city_name.setAdapter(txt_city_adapter);
 
             txt_area_adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1, arrayList_area_data);
             txt_area_name.setAdapter(txt_area_adapter);

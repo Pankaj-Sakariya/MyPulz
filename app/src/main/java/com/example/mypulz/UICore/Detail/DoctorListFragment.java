@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +107,28 @@ public class DoctorListFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        getView().setFocusableInTouchMode(true);
+//        getView().requestFocus();
+//        getView().setOnKeyListener(new View.OnKeyListener() {
+//
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//
+//                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK){
+//                    // handle back button's click listener
+//                    FindDoctorGridFragment fdg = new FindDoctorGridFragment();
+//                    changeFragment(fdg);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
+//    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

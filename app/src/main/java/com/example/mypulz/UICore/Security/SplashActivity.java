@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Window;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.mypulz.R;
 import com.example.mypulz.UICore.Detail.MainActivity;
 
 import Common.CommonFunction;
+import Common.ConnectionDetector;
 import Common.Constant;
 
 
@@ -52,26 +54,40 @@ public class SplashActivity extends Activity {
                 }
                 catch (Exception e) {
                 } finally {
-                    internet_flag = true;
-                    if(new CommonFunction().getSharedPreference(Constant.TAG_login_verified,activity).equalsIgnoreCase("0"))
-                    {
-                        Intent i = new Intent(SplashActivity.this, OtpActivity.class);
-                        startActivity(i);
-                        finish();
-                    }
-                    else if(new CommonFunction().getSharedPreference(Constant.TAG_login_verified,activity).equalsIgnoreCase("1"))
-                    {
-                        Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                        startActivity(i);
-                        finish();
+
+                    if(new ConnectionDetector(activity).isConnectingToInternet() == true) {
+                        if(new CommonFunction().getSharedPreference(Constant.TAG_login_verified,activity).equalsIgnoreCase("0"))
+                        {
+                            Intent i = new Intent(SplashActivity.this, OtpActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+                        else if(new CommonFunction().getSharedPreference(Constant.TAG_login_verified,activity).equalsIgnoreCase("1"))
+                        {
+                            Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+                        else
+                        {
+                            Intent i = new Intent(SplashActivity.this, OtpActivity.class);
+                            startActivity(i);
+                            finish();
+
+                        }
                     }
                     else
                     {
-                        Intent i = new Intent(SplashActivity.this, OtpActivity.class);
-                        startActivity(i);
-                        finish();
+
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(SplashActivity.this, "Something went wrong, either check you Internet connection or try after some time", Toast.LENGTH_LONG).show();
+                            }
+                        });
 
                     }
+
+
 
 
                 }

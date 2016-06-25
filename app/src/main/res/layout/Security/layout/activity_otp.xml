@@ -9,7 +9,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/padding1">
+        android:padding="@dimen/padding1"
+        android:background="@mipmap/background_image"
+        >
 
         <EditText
             android:id="@+id/txtMobileNumber"

@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity
 
 
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_find_doctor);
-        displayView(R.id.nav_find_doctor);
+        navigationView.setCheckedItem(R.id.nav_find_category);
+        displayView(R.id.nav_find_category);
 
         initializeWidget(navigationView);
     }
@@ -117,6 +117,12 @@ public class MainActivity extends AppCompatActivity
 //        }
 //    }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -128,7 +134,14 @@ public class MainActivity extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_find_doctor);
             displayView(R.id.nav_find_doctor); //display the News fragment
         } else {
-            moveTaskToBack(true);  //If view is in News fragment, exit application
+//            moveTaskToBack(true);  //If view is in News fragment, exit application
+        }
+
+        if(getFragmentManager().getBackStackEntryCount() == 0) {
+            super.onBackPressed();
+        }
+        else {
+            getFragmentManager().popBackStack();
         }
 
 //        int count = getFragmentManager().getBackStackEntryCount();
@@ -203,19 +216,18 @@ public class MainActivity extends AppCompatActivity
         switch (viewId) {
 
 
+            case R.id.nav_find_category:
+                fragment = new FindDoctorGridFragment();
+                title  = "Find Doctor";
+                viewIsAtHome = true;
+                break;
+
             case R.id.nav_find_doctor:
                 fragment = new FindDoctorGridFragment();
                 title  = "Find Doctor";
                 viewIsAtHome = true;
 
                 break;
-
-//            case R.id.nav_find_doctor:
-//                fragment = new FindDoctorFragment();
-//                title  = "Find Doctor";
-//                viewIsAtHome = true;
-//
-//                break;
             case R.id.nav_my_appointment:
                 fragment = new MyAppointmentFragment();
                 title  = "My Appointment";
@@ -280,7 +292,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onListFragmentInteraction(String item) {
 
     }
 }

@@ -87,8 +87,8 @@ public class AppointmentRA extends RecyclerView.Adapter<AppointmentRA.ViewHolder
                 rating_bar_doctor.setStar(5);
                 rating_bar_doctor.setmClickable(true);
                 rating_bar_doctor.setStarImageSize(16f);
-                rating_bar_doctor.setStarEmptyDrawable(mfragment.getResources().getDrawable(R.mipmap.ic_love_empty));
-                rating_bar_doctor.setStarFillDrawable(mfragment.getResources().getDrawable(R.mipmap.ic_love_fill));
+                rating_bar_doctor.setStarEmptyDrawable(mfragment.getResources().getDrawable(R.mipmap.ic_star_empty));
+                rating_bar_doctor.setStarFillDrawable(mfragment.getResources().getDrawable(R.mipmap.ic_star_fill));
                 // if button is clicked, close the custom dialog
                 btn_register.setOnClickListener(new View.OnClickListener() {
                     @Override

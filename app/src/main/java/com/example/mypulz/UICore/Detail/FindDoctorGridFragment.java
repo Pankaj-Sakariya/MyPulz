@@ -14,6 +14,14 @@ import com.example.mypulz.UICore.Detail.dummy.DummyContent;
 import com.example.mypulz.UICore.Detail.dummy.DummyContent.DummyItem;
 import com.example.mypulz.UICore.TableViewCell.FindDoctorGridRA;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+
+import Common.CommonFunction;
+import Common.Constant;
+
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +36,8 @@ public class FindDoctorGridFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 2;
     private OnListFragmentInteractionListener mListener;
+    JSONArray jsonArray_category = null;
+    ArrayList<String> arrayList_category_data;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -60,6 +70,17 @@ public class FindDoctorGridFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
+        String str_category_data =  new CommonFunction().getSharedPreference(Constant.TAG_jArray_category, getContext());
+
+        try {
+            jsonArray_category = new JSONArray(str_category_data);
+            arrayList_category_data = new CommonFunction().parseJsonArrayToMap(jsonArray_category,"category_name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -69,7 +90,7 @@ public class FindDoctorGridFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new FindDoctorGridRA(DummyContent.ITEMS, mListener,getActivity()));
+            recyclerView.setAdapter(new FindDoctorGridRA(arrayList_category_data, mListener,getActivity()));
         }
         return view;
     }
@@ -104,6 +125,6 @@ public class FindDoctorGridFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(String item);
     }
 }

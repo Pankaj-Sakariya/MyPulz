@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_find_category"
+            android:icon="@drawable/find_doctor"
+            android:title="Select Category"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_find_doctor"
             android:icon="@drawable/find_doctor"

@@ -99,41 +99,38 @@
                 android:textColor="#4e5f6f"
                 android:textSize="@dimen/textsize12"
                 android:textStyle="bold" />
+
+
+
+                    <TextView
+                        android:id="@+id/tv_time_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="left|center"
+                        android:text="Time :"
+                        android:textColor="#0a8feb"
+                        android:textSize="@dimen/textsize12"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="4"
+                        android:gravity="left|center"
+                        android:text="12:00:00 PM"
+                        android:textColor="#4e5f6f"
+                        android:textSize="@dimen/textsize12"
+                        android:textStyle="bold" />
+
+
+
+
                 </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="3dp" >
 
-            <TextView
-                android:id="@+id/tv_time_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:gravity="left|center"
-                android:text="Time :"
-                android:textColor="#0a8feb"
-                android:textSize="@dimen/textsize12"
-                android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="4"
-                    android:gravity="left|center"
-                    android:text="12:00:00 PM"
-                    android:textColor="#4e5f6f"
-                    android:textSize="@dimen/textsize12"
-                    android:textStyle="bold" />
-
-
-
-
-            </LinearLayout>
 
 
             <LinearLayout
@@ -191,7 +188,7 @@
                         android:id="@+id/btn_doctor_review"
                         android:background="@drawable/button_back"
                         android:textColor="@color/white"
-
+                        android:visibility="gone"
                         />
                 </LinearLayout>
 

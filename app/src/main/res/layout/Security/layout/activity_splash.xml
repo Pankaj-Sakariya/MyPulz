@@ -8,6 +8,6 @@
         android:layout_height="match_parent"
         android:id="@+id/imageView"
         android:layout_gravity="center_vertical"
-        android:background="@mipmap/background_img"
+        android:background="@mipmap/splash"
         />
 </RelativeLayout>

@@ -174,7 +174,7 @@ public class LoginActivity extends Activity {
                 super.onPostExecute(o);
                 CommonFunction.HideActivityIndicator(activity);
 
-                JSONArray jsonArray_customer_detail, jsonArray_category, jsonArray_vendor, jsonArray_area;
+                JSONArray jsonArray_customer_detail, jsonArray_category, jsonArray_vendor,jsonArray_city, jsonArray_area;
 
                 try {
                     if (response.has("status")) {
@@ -186,12 +186,14 @@ public class LoginActivity extends Activity {
                                 jsonArray_customer_detail = new CommonFunction().parseJsonArray(Constant.TAG_jArray_customer_detail, response);
                                 jsonArray_category = new CommonFunction().parseJsonArray(Constant.TAG_jArray_category, response);
                                 jsonArray_vendor = new CommonFunction().parseJsonArray(Constant.TAG_jArray_vendor, response);
+                                jsonArray_city = new CommonFunction().parseJsonArray(Constant.TAG_jArray_city, response);
                                 jsonArray_area = new CommonFunction().parseJsonArray(Constant.TAG_jArray_area, response);
 
                                 /** Save array in preference as string Using Common Function**/
                                 new CommonFunction().saveSharedPreference(Constant.TAG_jArray_customer_detail, jsonArray_customer_detail.toString(), activity);
                                 new CommonFunction().saveSharedPreference(Constant.TAG_jArray_category, jsonArray_category.toString(), activity);
                                 new CommonFunction().saveSharedPreference(Constant.TAG_jArray_vendor, jsonArray_vendor.toString(), activity);
+                                new CommonFunction().saveSharedPreference(Constant.TAG_jArray_city, jsonArray_city.toString(), activity);
                                 new CommonFunction().saveSharedPreference(Constant.TAG_jArray_area, jsonArray_area.toString(), activity);
 
                                 new CommonFunction().saveSharedPreference(Constant.TAG_login_verified, "1", activity);
